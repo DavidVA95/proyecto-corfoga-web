@@ -13,6 +13,7 @@
     <!-- Estilos -->
     {!!Html::style('css/app.css')!!}
     {!!Html::style('css/base.css')!!}
+    @yield('css')
 </head>
 <body>
     <div id="app">
@@ -74,8 +75,8 @@
 
         @yield('content')
     </div>
-
-    <!-- Scripts -->
     {!!Html::script('js/app.js')!!}
+    {!!Html::script('js/plugins/jquery.maskedinput.js')!!}
+    @yield('javascript')
 </body>
 </html>

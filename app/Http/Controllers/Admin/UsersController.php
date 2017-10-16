@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\User;
+use Validator;
+use Session;
+use Redirect;
 
 class UsersController extends Controller
 {
@@ -37,7 +41,31 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|regex:/^([1-7]-[0-9]{4}-[0-9]{4})$/|unique:users',
+            'name' => 'required|string|max:30',
+            'lastName' => 'required|string|max:30',
+            'password' => 'required|string|min:8|confirmed',
+            'email' => 'required|string|email|max:255|unique:users',
+            'phoneNumber' => 'required|regex:/^[0-9]{4}-[0-9]{4}$/',
+        ]);
+        if($validator->fails()) {
+            return Redirect::to('admin/usuarios/create')->withErrors($validator)->withInput();
+        }
+        $state = 'Listo';
+        $message = 'El usuario fue creado exitosamente.';
+        $alert_class = 'alert-success';
+        try {
+            User::create($request->all());
+        } catch(Exception $exception) {
+            $state = 'Error';
+            $message = 'No se pudo crear el usuario.';
+            $alert_class = 'alert-danger';
+        }
+        Session::flash('state', $state);
+        Session::flash('message', $message);
+        Session::flash('alert_class', $alert_class);
+        return Redirect::to('admin/usuarios/create');
     }
 
     /**

@@ -1,18 +1,31 @@
 @extends('layouts.admin')
-
 @section('page')
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default shadow">
-                <div class="panel-heading">Registrarse</div>
+                <div class="panel-heading">Crear un nuevo usuario</div>
                 <div class="panel-body">
-                    {!!Form::open(['route' => 'register', 'method' => 'POST', 'class' => 'form-horizontal'])!!}
+                    {!!Form::open(['route' => 'admin.usuarios.store', 'method' => 'POST', 'class' => 'form-horizontal'])!!}
                         {{ csrf_field() }}
+                        <div class="form-group">
+                            {!!Form::label('rol', 'Rol:', ['class' => 'col-md-4 control-label'])!!}
+                            <div class="col-md-6">
+                                {!!Form::select('rol', ['a' => 'Administrador', 'i' => 'Inspector', 'p' => 'Productor'], null, ['class' => 'form-control', 'id' => 'rol'])!!}
+                            </div>
+                        </div>
+                        <div class="form-group hidden" id="idType">
+                            {!!Form::label('type', 'Tipo de entidad:', ['class' => 'col-md-4 control-label'])!!}
+                            <div class="col-md-6">
+                                {!!Form::radio('type', 'f', true)!!}Física
+                                </br>
+                                {!!Form::radio('type', 'l')!!}Jurídica
+                            </div>
+                        </div>
                         <div class="form-group{{ $errors->has('id') ? ' has-error' : '' }}">
                             {!!Form::label('id', 'Cédula:', ['class' => 'col-md-4 control-label'])!!}
                             <div class="col-md-6">
-                                {!!Form::text('id', '', ['class' => 'form-control', 'required' => 'required',  'autofocus' => 'autofocus'])!!}
+                                {!!Form::text('id', '', ['class' => 'form-control', 'required' => 'required', 'autofocus' => 'autofocus', 'id' => 'id'])!!}
                                 @if ($errors->has('id'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('id') }}</strong>
@@ -73,18 +86,12 @@
                         <div class="form-group{{ $errors->has('phoneNumber') ? ' has-error' : '' }}">
                             {!!Form::label('phoneNumber', 'Número de teléfono:', ['class' => 'col-md-4 control-label'])!!}
                             <div class="col-md-6">
-                                {!!Form::text('phoneNumber', '', ['class' => 'form-control', 'required' => 'required'])!!}
+                                {!!Form::text('phoneNumber', '', ['class' => 'form-control', 'required' => 'required', 'id' => 'phoneNumber'])!!}
                                 @if ($errors->has('phoneNumber'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('phoneNumber') }}</strong>
                                     </span>
                                 @endif
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            {!!Form::label('rol', 'Rol:', ['class' => 'col-md-4 control-label'])!!}
-                            <div class="col-md-6">
-                                {!!Form::select('rol', ['a' => 'Administrador', 'c' => 'Criador', 'i' => 'Inspector'], null, ['class' => 'form-control'])!!}
                             </div>
                         </div>
                         <div class="form-group">
@@ -98,4 +105,7 @@
         </div>
     </div>
 </div>
+@endsection
+@section('javascript')
+    {!!Html::script('js/admin/users/create.js')!!}
 @endsection

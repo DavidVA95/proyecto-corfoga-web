@@ -40,5 +40,13 @@
         </ul>
     </div>
 </div>
+@if(Session::has('state'))
+    <div class="container alert {{ Session::get('alert_class') }} alert-dismissible show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>¡{{Session::get('state')}}!</strong> {{Session::get('message')}}
+    </div>
+@endif
 @yield('page')
 @endsection

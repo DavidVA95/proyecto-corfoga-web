@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password', 60);
             $table->string('email')->unique();
             $table->string('phoneNumber', 9);
-            $table->enum('rol', ['a', 'c', 'i']);
+            $table->enum('rol', ['a', 'i', 'p']);
             $table->rememberToken();
             $table->timestamps();
         });
