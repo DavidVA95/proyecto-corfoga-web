@@ -13,6 +13,7 @@
     <!-- Estilos -->
     {!!Html::style('css/app.css')!!}
     {!!Html::style('css/base.css')!!}
+    {!!Html::style('css/font-awesome.min.css')!!}
     @yield('css')
 </head>
 <body>
@@ -46,7 +47,6 @@
                         <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -72,7 +72,6 @@
                 </div>
             </div>
         </nav>
-
         @yield('content')
     </div>
     {!!Html::script('js/app.js')!!}

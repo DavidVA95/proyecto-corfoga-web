@@ -19,8 +19,8 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = DB::table('users')->paginate(20);
-        return view('admin.users.index');
+        $users = DB::table('users')->paginate(10);
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -41,8 +41,12 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+        $idRegex = '/^[1-7]-[0-9]{4}-[0-9]{4}$/';
+        if($request['type'] == 'l'){
+            $idRegex = '/^3-[1-9]{3}-[1-9]{6}$/';
+        }
         $validator = Validator::make($request->all(), [
-            'id' => 'required|regex:/^([1-7]-[0-9]{4}-[0-9]{4})$/|unique:users',
+            'id' => 'required|regex:'.$idRegex.'|unique:users',
             'name' => 'required|string|max:30',
             'lastName' => 'required|string|max:30',
             'password' => 'required|string|min:8|confirmed',
@@ -87,7 +91,8 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('admin.users.edit', compact('user'));
     }
 
     /**

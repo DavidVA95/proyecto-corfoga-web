@@ -9,9 +9,9 @@
                     {!!Form::open(['route' => 'admin.usuarios.store', 'method' => 'POST', 'class' => 'form-horizontal'])!!}
                         {{ csrf_field() }}
                         <div class="form-group">
-                            {!!Form::label('rol', 'Rol:', ['class' => 'col-md-4 control-label'])!!}
+                            {!!Form::label('role', 'Rol:', ['class' => 'col-md-4 control-label'])!!}
                             <div class="col-md-6">
-                                {!!Form::select('rol', ['a' => 'Administrador', 'i' => 'Inspector', 'p' => 'Productor'], null, ['class' => 'form-control', 'id' => 'rol'])!!}
+                                {!!Form::select('role', ['a' => 'Administrador', 'i' => 'Inspector', 'p' => 'Productor'], null, ['class' => 'form-control', 'id' => 'rol'])!!}
                             </div>
                         </div>
                         <div class="form-group hidden" id="idType">

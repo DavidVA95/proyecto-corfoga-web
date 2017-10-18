@@ -12,7 +12,7 @@ class LoginController extends Controller {
     use AuthenticatesUsers;
 
     protected function authenticated(Request $request, $user) {
-        if ($user->rol == 'a') {
+        if ($user->role == 'a') {
             return Redirect::to('admin/inicio');
         }
     }
