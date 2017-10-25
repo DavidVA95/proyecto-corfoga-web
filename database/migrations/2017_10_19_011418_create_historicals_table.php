@@ -15,9 +15,9 @@ class CreateHistoricalsTable extends Migration
     {
         Schema::create('historicals', function (Blueprint $table) {
             $table->increments('serialID');
-            $table->integer('serialUserID');
-            $table->tinyInteger('serialTypeID');
-            $table->dateTime('dateTime');
+            $table->integer('serialUserID')->unsigned();
+            $table->tinyInteger('serialTypeID')->unsigned();
+            $table->dateTime('datetime');
             $table->string('description');
 
             $table->foreign('serialUserID')->references('serialID')->on('users');

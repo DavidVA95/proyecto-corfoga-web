@@ -14,9 +14,9 @@ class CreateFarmsTable extends Migration
     public function up()
     {
         Schema::create('farms', function (Blueprint $table) {
-            $table->integer('asocebuID')->primary();
-            $table->integer('serialUserID');
-            $table->tinyInteger('serialRegionID');
+            $table->integer('asocebuID')->primary()->unsigned();
+            $table->integer('serialUserID')->unsigned();
+            $table->tinyInteger('serialRegionID')->unsigned();
             $table->string('name', 100);
             $table->timestamps();
 

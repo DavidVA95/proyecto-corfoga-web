@@ -15,8 +15,8 @@ class CreateAnimalsTable extends Migration
     {
         Schema::create('animals', function (Blueprint $table) {
             $table->increments('serialID');
-            $table->integer('asocebuFarmID');
-            $table->tinyInteger('serialBreedID');
+            $table->integer('asocebuFarmID')->unsigned();
+            $table->tinyInteger('serialBreedID')->unsigned();
             $table->string('register', 15);
             $table->string('code', 15);
             $table->enum('sex', ['m', 'h']);

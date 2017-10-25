@@ -14,9 +14,9 @@ class CreateDetailsTable extends Migration
     public function up()
     {
         Schema::create('details', function (Blueprint $table) {
-            $table->integer('serialInspectionID');
-            $table->integer('serialAnimalID');
-            $table->tinyInteger('serialFeedingMethodID');
+            $table->integer('serialInspectionID')->unsigned();
+            $table->integer('serialAnimalID')->unsigned();
+            $table->tinyInteger('serialFeedingMethodID')->unsigned();
             $table->string('weight', 6);
             $table->string('scrotalCircumference', 5);
             $table->string('observations');

@@ -15,9 +15,9 @@ class CreateInspectionsTable extends Migration
     {
         Schema::create('inspections', function (Blueprint $table) {
             $table->increments('serialID');
-            $table->integer('asocebuFarmID');
-            $table->dateTime('dateTime');
-            $table->tinyInteger('visitNumber');
+            $table->integer('asocebuFarmID')->unsigned();
+            $table->dateTime('datetime');
+            $table->tinyInteger('visitNumber')->unsigned();
             $table->timestamps();
 
             $table->foreign('asocebuFarmID')->references('asocebuID')->on('farms');

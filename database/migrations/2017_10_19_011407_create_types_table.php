@@ -15,15 +15,17 @@ class CreateTypesTable extends Migration
     public function up()
     {
         Schema::create('types', function (Blueprint $table) {
-            $table->tinyInteger('serialID')->primary();
+            $table->tinyInteger('serialID')->primary()->unsigned();
             $table->string('name', 45)->unique();
         });
         // Se insertan los valores por defecto de la tabla.
+        /*
         DB::table('types')->insert([
             ['serialID' => 1, 'name' => ''],
             ['serialID' => 2, 'name' => ''],
             ['serialID' => 3, 'name' => '']
         ]);
+        */
     }
 
     /**
