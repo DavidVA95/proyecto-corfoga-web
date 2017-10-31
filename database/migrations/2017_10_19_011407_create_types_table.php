@@ -19,13 +19,16 @@ class CreateTypesTable extends Migration
             $table->string('name', 45)->unique();
         });
         // Se insertan los valores por defecto de la tabla.
-        /*
         DB::table('types')->insert([
-            ['serialID' => 1, 'name' => ''],
-            ['serialID' => 2, 'name' => ''],
-            ['serialID' => 3, 'name' => '']
+            ['serialID' => 1, 'name' => 'Crear usuario'],
+            ['serialID' => 2, 'name' => 'Editar usuario'],
+            ['serialID' => 3, 'name' => 'Eliminar usuario'],
+            ['serialID' => 4, 'name' => 'Crear finca'],
+            ['serialID' => 5, 'name' => 'Editar finca'],
+            ['serialID' => 6, 'name' => 'Eliminar finca'],
+            ['serialID' => 7, 'name' => 'Registrar animales'],
+            ['serialID' => 8, 'name' => 'Terminar inspección']
         ]);
-        */
     }
 
     /**

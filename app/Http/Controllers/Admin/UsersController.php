@@ -10,15 +10,13 @@ use Validator;
 use Session;
 use Redirect;
 
-class UsersController extends Controller
-{
+class UsersController extends Controller {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         $users = DB::table('users')->paginate(10);
         return view('admin.users.index', compact('users'));
     }
@@ -28,8 +26,7 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         return view('admin.users.create');
     }
 
@@ -39,8 +36,7 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $idRegex = '/^[1-7]-[0-9]{4}-[0-9]{4}$/';
         if($request['type'] == 'l'){
             $idRegex = '/^3-[1-9]{3}-[1-9]{6}$/';
@@ -56,20 +52,22 @@ class UsersController extends Controller
         if($validator->fails()) {
             return Redirect::to('admin/usuarios/create')->withErrors($validator)->withInput();
         }
-        $state = 'Listo';
-        $message = 'El usuario fue creado exitosamente.';
-        $alert_class = 'alert-success';
-        try {
-            User::create($request->all());
-        } catch(Exception $exception) {
-            $state = 'Error';
-            $message = 'No se pudo crear el usuario.';
-            $alert_class = 'alert-danger';
+        else {
+            $state = 'Listo';
+            $message = 'El usuario fue creado exitosamente.';
+            $alert_class = 'alert-success';
+            try {
+                User::create($request->all());
+            } catch(Exception $exception) {
+                $state = 'Error';
+                $message = 'No se pudo crear el usuario.';
+                $alert_class = 'alert-danger';
+            }
+            Session::flash('state', $state);
+            Session::flash('message', $message);
+            Session::flash('alert_class', $alert_class);
+            return Redirect::to('admin/usuarios/create');
         }
-        Session::flash('state', $state);
-        Session::flash('message', $message);
-        Session::flash('alert_class', $alert_class);
-        return Redirect::to('admin/usuarios/create');
     }
 
     /**
@@ -89,8 +87,7 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         $user = User::find($id);
         return view('admin.users.edit', compact('user'));
     }

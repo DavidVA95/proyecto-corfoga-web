@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class FarmsController extends Controller
-{
+class FarmsController extends Controller {
     /**
      * Display a listing of the resource.
      *

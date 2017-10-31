@@ -6,7 +6,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['namespace'=>'Admin', 'prefix'=>'admin', 'as'=>'admin.'], function(){
+Route::group(['namespace'=>'Admin', 'prefix'=>'admin', 'as'=>'admin.'], function() {
     Route::get('inicio', 'HomeController@index');
     Route::resource('usuarios', 'UsersController');
     Route::resource('fincas', 'FarmsController');

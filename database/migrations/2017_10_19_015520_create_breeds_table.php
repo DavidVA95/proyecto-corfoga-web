@@ -20,7 +20,8 @@ class CreateBreedsTable extends Migration
         });
         // Se insertan los valores por defecto de la tabla.
         DB::table('breeds')->insert([
-            ['serialID' => 1, 'name' => 'Brahman gris']
+            ['serialID' => 1, 'name' => 'Brahman gris'],
+            ['serialID' => 2, 'name' => 'Brahman rojo']
         ]);
     }
 

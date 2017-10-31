@@ -180,8 +180,8 @@ return [
         /*
          * Paquetes agregados para el proyecto CORFOGA...
          */
-         Collective\Html\HtmlServiceProvider::class,
-
+        Collective\Html\HtmlServiceProvider::class,
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
     ],
 
     /*
@@ -234,9 +234,10 @@ return [
         /*
          * Paquetes agregados para el proyecto CORFOGA...
          */
-         'Form' => Collective\Html\FormFacade::class,
-         'Html' => Collective\Html\HtmlFacade::class,
-
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ],
 
 ];
