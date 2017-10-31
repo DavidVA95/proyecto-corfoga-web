@@ -12,7 +12,7 @@ class Breed extends Model {
      * @var array
      */
      protected $guarded = [
-         'serialID',
+         'id',
          'name'
      ];
 }

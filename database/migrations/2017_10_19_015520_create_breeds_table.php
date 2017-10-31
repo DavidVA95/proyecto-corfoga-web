@@ -15,13 +15,13 @@ class CreateBreedsTable extends Migration
     public function up()
     {
         Schema::create('breeds', function (Blueprint $table) {
-            $table->tinyInteger('serialID')->primary()->unsigned();
+            $table->tinyInteger('id')->primary()->unsigned();
             $table->string('name', 45);
         });
         // Se insertan los valores por defecto de la tabla.
         DB::table('breeds')->insert([
-            ['serialID' => 1, 'name' => 'Brahman gris'],
-            ['serialID' => 2, 'name' => 'Brahman rojo']
+            ['id' => 1, 'name' => 'Brahman gris'],
+            ['id' => 2, 'name' => 'Brahman rojo']
         ]);
     }
 

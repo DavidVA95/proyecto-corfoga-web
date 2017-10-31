@@ -19,9 +19,9 @@ class Historical extends Model {
      * @var array
      */
      protected $guarded = [
-         'serialID',
-         'serialUserID',
-         'serialTypeID',
+         'id',
+         'userID',
+         'typeID',
          'datetime',
          'description'
      ];
@@ -32,11 +32,11 @@ class Historical extends Model {
      * @var array
      */
     protected $hidden = [
-        'serialTypeID'
+        'typeID'
     ];
 
     // Se asocia un miembro del historial con el usuario responsable de la acción.
     public function user() {
-        $this->hasOne('App\User', 'serialID', 'serialUserID');
+        $this->hasOne('App\User', 'id', 'userID');
     }
 }

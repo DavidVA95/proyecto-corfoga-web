@@ -11,7 +11,7 @@ class Type extends Model {
      * @var array
      */
      protected $guarded = [
-        'serialID',
+        'id',
         'name'
      ];
 }

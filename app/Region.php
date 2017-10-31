@@ -11,7 +11,7 @@ class Region extends Model {
      * @var array
      */
      protected $guarded = [
-        'serialID',
+        'id',
         'name'
      ];
 }

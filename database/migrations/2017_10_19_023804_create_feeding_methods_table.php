@@ -15,15 +15,15 @@ class CreateFeedingMethodsTable extends Migration
     public function up()
     {
         Schema::create('feeding_methods', function (Blueprint $table) {
-            $table->tinyInteger('serialID')->primary()->unsigned();
+            $table->tinyInteger('id')->primary()->unsigned();
             $table->string('name', 25);
         });
         // Se insertan los valores por defecto de la tabla.
         DB::table('feeding_methods')->insert([
-            ['serialID' => 1, 'name' => 'Pastoreo'],
-            ['serialID' => 2, 'name' => 'Estabulación'],
-            ['serialID' => 3, 'name' => 'Semi estabulación'],
-            ['serialID' => 4, 'name' => 'Suplementación en potrero']
+            ['id' => 1, 'name' => 'Pastoreo'],
+            ['id' => 2, 'name' => 'Estabulación'],
+            ['id' => 3, 'name' => 'Semi estabulación'],
+            ['id' => 4, 'name' => 'Suplementación en potrero']
         ]);
     }
 

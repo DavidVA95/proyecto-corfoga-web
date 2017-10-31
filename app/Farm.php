@@ -12,7 +12,7 @@ class Farm extends Model {
      * @var array
      */
     protected $fillable = [
-        'serialUserID',
+        'userID',
         'name'
     ];
 
@@ -23,7 +23,7 @@ class Farm extends Model {
      */
      protected $guarded = [
         'asocebuID',
-        'serialRegionID'
+        'regionID'
      ];
 
     /**
@@ -32,11 +32,11 @@ class Farm extends Model {
      * @var array
      */
     protected $hidden = [
-        'serialRegionID'
+        'regionID'
     ];
 
     // Se asocia la finca con su respectivo usuario.
     public function user() {
-        $this->hasOne('App\User', 'serialID', 'serialUserID');
+        $this->hasOne('App\User', 'id', 'userID');
     }
 }

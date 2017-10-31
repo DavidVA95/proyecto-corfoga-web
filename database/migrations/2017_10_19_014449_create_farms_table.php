@@ -15,14 +15,14 @@ class CreateFarmsTable extends Migration
     {
         Schema::create('farms', function (Blueprint $table) {
             $table->integer('asocebuID')->primary()->unsigned();
-            $table->integer('serialUserID')->unsigned();
-            $table->tinyInteger('serialRegionID')->unsigned();
+            $table->integer('userID')->unsigned();
+            $table->tinyInteger('regionID')->unsigned();
             $table->string('name', 100);
             $table->timestamps();
 
-            $table->foreign('serialUserID')->references('serialID')->on('users');
-            $table->foreign('serialRegionID')->references('serialID')->on('regions');
-            $table->index(['asocebuID', 'serialUserID', 'serialRegionID']);
+            $table->foreign('userID')->references('id')->on('users');
+            $table->foreign('regionID')->references('id')->on('regions');
+            $table->index(['asocebuID', 'userID', 'regionID']);
         });
     }
 

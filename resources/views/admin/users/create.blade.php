@@ -22,13 +22,13 @@
                                 {!!Form::radio('type', 'l')!!}Jurídica
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('id') ? ' has-error' : '' }}">
-                            {!!Form::label('id', 'Cédula:', ['class' => 'col-md-4 control-label'])!!}
+                        <div class="form-group{{ $errors->has('identification') ? ' has-error' : '' }}">
+                            {!!Form::label('identification', 'Cédula:', ['class' => 'col-md-4 control-label'])!!}
                             <div class="col-md-6">
-                                {!!Form::text('id', '', ['class' => 'form-control', 'required' => 'required', 'autofocus' => 'autofocus', 'id' => 'id'])!!}
-                                @if ($errors->has('id'))
+                                {!!Form::text('identification', '', ['class' => 'form-control', 'required' => 'required', 'autofocus' => 'autofocus', 'id' => 'identification'])!!}
+                                @if ($errors->has('identification'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('id') }}</strong>
+                                        <strong>{{ $errors->first('identification') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -86,7 +86,7 @@
                         <div class="form-group{{ $errors->has('phoneNumber') ? ' has-error' : '' }}">
                             {!!Form::label('phoneNumber', 'Número de teléfono:', ['class' => 'col-md-4 control-label'])!!}
                             <div class="col-md-6">
-                                {!!Form::text('phoneNumber', '', ['class' => 'form-control', 'required' => 'required', 'id' => 'phoneNumber'])!!}
+                                {!!Form::text('phoneNumber', '', ['class' => 'form-control', 'id' => 'phoneNumber'])!!}
                                 @if ($errors->has('phoneNumber'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('phoneNumber') }}</strong>

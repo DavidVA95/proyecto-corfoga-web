@@ -14,15 +14,15 @@ class CreateHistoricalsTable extends Migration
     public function up()
     {
         Schema::create('historicals', function (Blueprint $table) {
-            $table->increments('serialID');
-            $table->integer('serialUserID')->unsigned();
-            $table->tinyInteger('serialTypeID')->unsigned();
+            $table->increments('id');
+            $table->integer('userID')->unsigned();
+            $table->tinyInteger('typeID')->unsigned();
             $table->dateTime('datetime');
             $table->string('description');
 
-            $table->foreign('serialUserID')->references('serialID')->on('users');
-            $table->foreign('serialTypeID')->references('serialID')->on('types');
-            $table->index(['dateTime', 'serialUserID', 'serialTypeID']);
+            $table->foreign('userID')->references('id')->on('users');
+            $table->foreign('typeID')->references('id')->on('types');
+            $table->index(['dateTime', 'userID', 'typeID']);
         });
     }
 

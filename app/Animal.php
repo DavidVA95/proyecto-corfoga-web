@@ -12,9 +12,9 @@ class Animal extends Model {
      * @var array
      */
      protected $guarded = [
-         'serialID',
+         'id',
          'asocebuFarmID',
-         'serialBreedID',
+         'breedID',
          'register',
          'code',
          'sex',
@@ -29,11 +29,11 @@ class Animal extends Model {
      * @var array
      */
     protected $hidden = [
-        'serialBreedID'
+        'breedID'
     ];
 
     // Se asocia el animal con los detalles en los que se menciona.
     public function details() {
-        $this->hasMany('App\Detail', 'serialAnimalID', 'serialID');
+        $this->hasMany('App\Detail', 'animalID', 'id');
     }
 }

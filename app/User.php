@@ -14,11 +14,13 @@ class User extends Authenticatable {
      * @var array
      */
     protected $fillable = [
+        'identification',
         'name',
         'lastName',
         'password',
         'email',
-        'phoneNumber'
+        'phoneNumber',
+        'role'
     ];
 
     /**
@@ -27,8 +29,8 @@ class User extends Authenticatable {
      * @var array
      */
      protected $guarded = [
-         'serialID',
          'id',
+         'identification',
          'role',
          'created_at',
          'updated_at'
@@ -48,11 +50,11 @@ class User extends Authenticatable {
 
     // Se asocia el usuario con sus fincas.
     public function farms() {
-        $this->hasMany('App\Farm', 'serialUserID', 'serialID');
+        $this->hasMany('App\Farm', 'userID', 'id');
     }
 
     // Se asocial el usuario con sus historiales.
     public function historicals() {
-        $this->hasMany('App\Historical', 'serialUserID',' serialID');
+        $this->hasMany('App\Historical', 'userID',' id');
     }
 }

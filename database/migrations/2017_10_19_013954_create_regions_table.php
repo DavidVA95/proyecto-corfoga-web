@@ -15,17 +15,17 @@ class CreateRegionsTable extends Migration
     public function up()
     {
         Schema::create('regions', function (Blueprint $table) {
-            $table->tinyInteger('serialID')->primary()->unsigned();
+            $table->tinyInteger('id')->primary()->unsigned();
             $table->string('name', 16);
         });
         // Se insertan los valores por defecto de la tabla.
         DB::table('regions')->insert([
-            ['serialID' => 1, 'name' => 'Central'],
-            ['serialID' => 2, 'name' => 'Chorotega'],
-            ['serialID' => 3, 'name' => 'Pacífico Central'],
-            ['serialID' => 4, 'name' => 'Brunca'],
-            ['serialID' => 5, 'name' => 'Huetar Atlántica'],
-            ['serialID' => 6, 'name' => 'Huetar Norte']
+            ['id' => 1, 'name' => 'Central'],
+            ['id' => 2, 'name' => 'Chorotega'],
+            ['id' => 3, 'name' => 'Pacífico Central'],
+            ['id' => 4, 'name' => 'Brunca'],
+            ['id' => 5, 'name' => 'Huetar Atlántica'],
+            ['id' => 6, 'name' => 'Huetar Norte']
         ]);
     }
 

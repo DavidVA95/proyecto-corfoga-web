@@ -11,7 +11,7 @@ class Inspection extends Model {
      * @var array
      */
      protected $guarded = [
-        'serialID',
+        'id',
         'asocebuFarmID',
         'datetime',
         'visitNumber'
@@ -19,7 +19,7 @@ class Inspection extends Model {
 
      // Se asocia la inspección con sus respectivos detalles.
      public function details() {
-         $this->hasMany('App\Detail', 'serialInspectionID', 'serialID');
+         $this->hasMany('App\Detail', 'inspectionID', 'id');
      }
 
      // Se asocia la inspección con su respectiva finca.

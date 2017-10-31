@@ -14,12 +14,12 @@ $(document).ready(function() {
         if(this.value == 'f') {
             idInputDefaultMask();
         } else {
-            $('#id').mask('3-999-999999');
+            $('#identification').mask('3-999-999999');
         }
     });
 });
 
 function idInputDefaultMask() {
     $.mask.definitions['#']='[1-7]';
-    $('#id').mask('#-9999-9999');
+    $('#identification').mask('#-9999-9999');
 }

@@ -14,9 +14,9 @@ class CreateAnimalsTable extends Migration
     public function up()
     {
         Schema::create('animals', function (Blueprint $table) {
-            $table->increments('serialID');
+            $table->increments('id');
             $table->integer('asocebuFarmID')->unsigned();
-            $table->tinyInteger('serialBreedID')->unsigned();
+            $table->tinyInteger('breedID')->unsigned();
             $table->string('register', 15);
             $table->string('code', 15);
             $table->enum('sex', ['m', 'h']);
@@ -26,8 +26,8 @@ class CreateAnimalsTable extends Migration
             $table->timestamps();
 
             $table->foreign('asocebuFarmID')->references('asocebuID')->on('farms');
-            $table->foreign('serialBreedID')->references('serialID')->on('breeds');
-            $table->index(['asocebuFarmID', 'serialBreedID']);
+            $table->foreign('breedID')->references('id')->on('breeds');
+            $table->index(['asocebuFarmID', 'breedID']);
         });
     }
 

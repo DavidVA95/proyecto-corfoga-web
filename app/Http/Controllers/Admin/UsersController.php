@@ -11,8 +11,9 @@ use Session;
 use Redirect;
 
 class UsersController extends Controller {
+
     /**
-     * Display a listing of the resource.
+     * Carga los usuarios para después desplegarlos en la vista "index" de usuarios.
      *
      * @return \Illuminate\Http\Response
      */
@@ -22,7 +23,7 @@ class UsersController extends Controller {
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Retorna la página con el formulario para crear usuarios.
      *
      * @return \Illuminate\Http\Response
      */
@@ -31,7 +32,8 @@ class UsersController extends Controller {
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Realiza validaciones para el almacenaje de un usuario nuevo.
+     * Si la información es correcta se almacena el usuario, sino, se informa al usuario.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -42,7 +44,7 @@ class UsersController extends Controller {
             $idRegex = '/^3-[1-9]{3}-[1-9]{6}$/';
         }
         $validator = Validator::make($request->all(), [
-            'id' => 'required|regex:'.$idRegex.'|unique:users',
+            'identification' => 'required|regex:'.$idRegex.'|unique:users',
             'name' => 'required|string|max:30',
             'lastName' => 'required|string|max:30',
             'password' => 'required|string|min:8|confirmed',
@@ -57,7 +59,15 @@ class UsersController extends Controller {
             $message = 'El usuario fue creado exitosamente.';
             $alert_class = 'alert-success';
             try {
-                User::create($request->all());
+                User::create([
+                    'identification' => $request['identification'],
+                    'name' => $request['name'],
+                    'lastName' => $request['lastName'],
+                    'password' => bcrypt($request['password']),
+                    'email' => $request['email'],
+                    'phoneNumber' => $request['phoneNumber'],
+                    'role' => $request['role'],
+                ]);
             } catch(Exception $exception) {
                 $state = 'Error';
                 $message = 'No se pudo crear el usuario.';
@@ -71,18 +81,19 @@ class UsersController extends Controller {
     }
 
     /**
-     * Display the specified resource.
+     * Carga toda la información correspondiente a un usuario en la vista "view" de usuarios.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        return view('admin.users.view', compact('user'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Busca un usuario por el "id" y luego lo retorna en una vista para su edición.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

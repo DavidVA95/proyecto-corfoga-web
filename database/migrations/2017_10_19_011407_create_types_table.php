@@ -15,19 +15,19 @@ class CreateTypesTable extends Migration
     public function up()
     {
         Schema::create('types', function (Blueprint $table) {
-            $table->tinyInteger('serialID')->primary()->unsigned();
+            $table->tinyInteger('id')->primary()->unsigned();
             $table->string('name', 45)->unique();
         });
         // Se insertan los valores por defecto de la tabla.
         DB::table('types')->insert([
-            ['serialID' => 1, 'name' => 'Crear usuario'],
-            ['serialID' => 2, 'name' => 'Editar usuario'],
-            ['serialID' => 3, 'name' => 'Eliminar usuario'],
-            ['serialID' => 4, 'name' => 'Crear finca'],
-            ['serialID' => 5, 'name' => 'Editar finca'],
-            ['serialID' => 6, 'name' => 'Eliminar finca'],
-            ['serialID' => 7, 'name' => 'Registrar animales'],
-            ['serialID' => 8, 'name' => 'Terminar inspección']
+            ['id' => 1, 'name' => 'Crear usuario'],
+            ['id' => 2, 'name' => 'Editar usuario'],
+            ['id' => 3, 'name' => 'Eliminar usuario'],
+            ['id' => 4, 'name' => 'Crear finca'],
+            ['id' => 5, 'name' => 'Editar finca'],
+            ['id' => 6, 'name' => 'Eliminar finca'],
+            ['id' => 7, 'name' => 'Registrar animales'],
+            ['id' => 8, 'name' => 'Terminar inspección']
         ]);
     }
 

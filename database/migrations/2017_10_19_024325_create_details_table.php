@@ -14,17 +14,17 @@ class CreateDetailsTable extends Migration
     public function up()
     {
         Schema::create('details', function (Blueprint $table) {
-            $table->integer('serialInspectionID')->unsigned();
-            $table->integer('serialAnimalID')->unsigned();
-            $table->tinyInteger('serialFeedingMethodID')->unsigned();
+            $table->integer('inspectionID')->unsigned();
+            $table->integer('animalID')->unsigned();
+            $table->tinyInteger('feedingMethodID')->unsigned();
             $table->string('weight', 6);
             $table->string('scrotalCircumference', 5);
             $table->string('observations');
 
-            $table->primary(['serialInspectionID', 'serialAnimalID']);
-            $table->foreign('serialInspectionID')->references('serialID')->on('inspections');
-            $table->foreign('serialAnimalID')->references('serialID')->on('animals');
-            $table->index('serialFeedingMethodID');
+            $table->primary(['inspectionID', 'animalID']);
+            $table->foreign('inspectionID')->references('id')->on('inspections');
+            $table->foreign('animalID')->references('id')->on('animals');
+            $table->index('feedingMethodID');
         });
     }
 
