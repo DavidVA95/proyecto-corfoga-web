@@ -22,12 +22,10 @@ class CreateTypesTable extends Migration
         DB::table('types')->insert([
             ['id' => 1, 'name' => 'Crear usuario'],
             ['id' => 2, 'name' => 'Editar usuario'],
-            ['id' => 3, 'name' => 'Eliminar usuario'],
-            ['id' => 4, 'name' => 'Crear finca'],
-            ['id' => 5, 'name' => 'Editar finca'],
-            ['id' => 6, 'name' => 'Eliminar finca'],
-            ['id' => 7, 'name' => 'Registrar animales'],
-            ['id' => 8, 'name' => 'Terminar inspección']
+            ['id' => 3, 'name' => 'Crear finca'],
+            ['id' => 4, 'name' => 'Editar finca'],
+            ['id' => 5, 'name' => 'Registrar animales'],
+            ['id' => 6, 'name' => 'Terminar inspección']
         ]);
     }
 

@@ -5,13 +5,21 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Historical extends Model {
+    // Para que Eloquent no asuma los atributos "created_at" y "updated_at".
+    public $timestamps = false;
 
     /**
      * Atributos que son asignables.
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'userID',
+        'typeID',
+        'datetime',
+        'description'
+    ];
 
     /**
      * Atributos que no son asignables.

@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Farm extends Model {
+    // Eloquent asume que el "primaryKey" de la tabla se llama "id", con esto se puede cambiar.
+    protected $primaryKey = 'asocebuID';
 
     /**
      * Atributos que son asignables.
@@ -12,7 +14,9 @@ class Farm extends Model {
      * @var array
      */
     protected $fillable = [
+        'asocebuID',
         'userID',
+        'regionID',
         'name'
     ];
 

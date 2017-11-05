@@ -25,3 +25,15 @@ body {
 .navbar .navbar-nav>li>a, .navbar .navbar-brand {
     color: #FAFAFA;
 }
+
+.button {
+    background-color: #A1DB8A;
+    border-color: #A1DB8A;
+    color: #FAFAFA;
+}
+
+.button:hover {
+    background-color: #CCC;
+    border-color: #CCC;
+    color: #23282D;
+}
