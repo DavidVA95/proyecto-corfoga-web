@@ -13,7 +13,7 @@
             @foreach($farms as $farm)
             <tr>
                 <td>{{$farm->asocebuID}}</td>
-                <td>{{$farm->identification}}</td>
+                <td>{{$farm->identification}}<br>{{$farm->userName}}</td>
                 <td>{{$farm->regionName}}</td>
                 <td>{{{$farm->farmName}}}</td>
                 <td>

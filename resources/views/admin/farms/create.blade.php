@@ -19,7 +19,7 @@
                                 <div class="col-md-6">
                                     <select class="form-control"  name="owner">
                                         @foreach($producers as $producer)
-                                            <option value="{{$producer->id}}">{{$producer->identification}}</option>
+                                            <option value="{{$producer->id}}">{{$producer->identification." ── ".$producer->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -27,7 +27,11 @@
                             <div class="form-group">
                                 {!!Form::label('region', 'Región:', ['class' => 'col-md-4 control-label'])!!}
                                 <div class="col-md-6">
-                                    {!!Form::text('region', $farm->, ['class' => 'form-control', 'required' => 'required', 'readonly' => 'readonly'])!!}
+                                    <select class="form-control"  name="owner">
+                                        @foreach($regions as $region)
+                                            <option value="{{$region->id}}">{{$region->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">

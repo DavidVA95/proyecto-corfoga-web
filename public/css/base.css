@@ -26,6 +26,20 @@ body {
     color: #FAFAFA;
 }
 
+.navbar .navbar-nav>li>a:hover {
+    background-color: #FAFAFA;
+    color: #23282D;
+}
+
+.navbar .navbar-nav>li>a:focus {
+    background-color: #23282D;
+    color: #FAFAFA;
+}
+
+.navbar .navbar-brand:hover {
+    color: #D4D4D4;
+}
+
 .button {
     background-color: #A1DB8A;
     border-color: #A1DB8A;

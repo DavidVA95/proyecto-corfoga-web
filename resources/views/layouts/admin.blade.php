@@ -36,7 +36,7 @@
             <li><a href="{{route('admin.inspecciones.index')}}"><i class="fa fa-search fa-fw"></i>Ver inspecciones</a></li>
         </ul>
     </li>
-    <li><a href="#"><i class="fa fa-history fa-fw"></i>Historial</a></li>
+    <li><a href="historial"><i class="fa fa-history fa-fw"></i>Historial</a></li>
 @endsection
 @section('content')
 @if(Session::has('state'))

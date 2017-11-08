@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" href="{{asset('img/favicon.png')}}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     {!!Html::style('css/app.css')!!}
     {!!Html::style('css/base.css')!!}
@@ -22,10 +23,11 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand">{{config('app.name', 'CORGOGA Web Site')}}</a>
+                <img src="{{asset('img/logo.png')}}" alt="Logo" class="img-circle">
             </div>
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="active" id="home"><a href="#"><i class="fa fa-home fa-fw"></i>Inicio</a></li>
+                    <li><a href="#"><i class="fa fa-home fa-fw"></i>Inicio</a></li>
                     @if (Auth::guest())
                         <li><a href="{{route('login')}}"><i class="fa sign-in fa-fw"></i>Acceder</a></li>
                     @else
@@ -52,7 +54,6 @@
         @yield('content')
     </header>
     {!!Html::script('js/app.js')!!}
-    {!!Html::script('js/base.js')!!}
     {!!Html::script('js/plugins/jquery.maskedinput.js')!!}
     @yield('javascript')
 </body>

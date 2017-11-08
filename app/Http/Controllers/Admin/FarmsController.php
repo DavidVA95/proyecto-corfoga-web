@@ -27,8 +27,8 @@ class FarmsController extends Controller {
         $farms = DB::table('farms')
             ->join('users', 'farms.userID', '=', 'users.id')
             ->join('regions', 'farms.regionID', '=', 'regions.id')
-            ->select('farms.asocebuID', 'users.identification', 'regions.name as regionName', 'farms.name as farmName')
-            ->paginate(20);
+            ->select('farms.asocebuID', 'users.identification', 'users.name as userName', 'regions.name as regionName', 'farms.name as farmName')
+            ->paginate(10);
         return view('admin.farms.index', compact('farms'));
     }
 
@@ -40,7 +40,7 @@ class FarmsController extends Controller {
      */
     public function create()
     {
-        $producers = DB::table('users')->select('id', 'identification')->where('role', 'p')->get();
+        $producers = DB::table('users')->select('id', 'identification', 'name')->where('role', 'p')->get();
         $regions = Region::all();
         return view('admin.farms.create', compact('producers', 'regions'));
     }
