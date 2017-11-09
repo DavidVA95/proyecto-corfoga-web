@@ -4,16 +4,28 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class AnimalsController extends Controller {
+
     /**
-     * Display a listing of the resource.
+     * Carga los animales para después desplegarlos en la vista "index" correspondiente.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $animals = DB::table('animals')
+            ->join('breeds', 'animals.breedID', '=', 'breeds.id')
+            ->paginate(10);
+        // Recorre la tabla de animales.
+        foreach($animals as $animal) {
+            // Reemplaza el formato de la fecha almacenada.
+            $animal->birthdate = Carbon::createFromFormat('Y-m-d', $animal->birthdate)
+                ->format('d/m/Y');
+        }
+        return view('admin.animals.index', compact('animals'));
     }
 
     /**

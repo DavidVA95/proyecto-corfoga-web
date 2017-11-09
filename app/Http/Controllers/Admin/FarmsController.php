@@ -18,7 +18,8 @@ use Redirect;
 class FarmsController extends Controller {
 
     /**
-     * Carga las fincas para después desplegarlos en la vista "index" correspondiente.
+     * Carga las fincas según el "asocebuID" de manera descendente para después
+     * desplegarlos en la vista "index" correspondiente.
      *
      * @return \Illuminate\Http\Response
      */
@@ -28,6 +29,7 @@ class FarmsController extends Controller {
             ->join('users', 'farms.userID', '=', 'users.id')
             ->join('regions', 'farms.regionID', '=', 'regions.id')
             ->select('farms.asocebuID', 'users.identification', 'users.name as userName', 'regions.name as regionName', 'farms.name as farmName')
+            ->orderBy('farms.asocebuID', 'desc')
             ->paginate(10);
         return view('admin.farms.index', compact('farms'));
     }

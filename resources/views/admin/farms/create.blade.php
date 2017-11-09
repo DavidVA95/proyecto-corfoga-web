@@ -27,7 +27,7 @@
                             <div class="form-group">
                                 {!!Form::label('region', 'Región:', ['class' => 'col-md-4 control-label'])!!}
                                 <div class="col-md-6">
-                                    <select class="form-control"  name="owner">
+                                    <select class="form-control"  name="region">
                                         @foreach($regions as $region)
                                             <option value="{{$region->id}}">{{$region->name}}</option>
                                         @endforeach
