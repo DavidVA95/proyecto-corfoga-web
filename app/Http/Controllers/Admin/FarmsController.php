@@ -6,14 +6,15 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
 use Carbon\Carbon;
+use Validator;
+use Session;
+use Redirect;
 use App\Farm;
 use App\User;
 use App\Region;
 use App\Historical;
-use Validator;
-use Session;
-use Redirect;
 
 class FarmsController extends Controller {
 
@@ -28,7 +29,8 @@ class FarmsController extends Controller {
         $farms = DB::table('farms')
             ->join('users', 'farms.userID', '=', 'users.id')
             ->join('regions', 'farms.regionID', '=', 'regions.id')
-            ->select('farms.asocebuID', 'users.identification', 'users.name as userName', 'regions.name as regionName', 'farms.name as farmName')
+            ->select('farms.asocebuID', 'users.identification', 'users.id as userID',
+                'users.name as userName', 'regions.name as regionName', 'farms.name as farmName')
             ->orderBy('farms.asocebuID', 'desc')
             ->paginate(10);
         return view('admin.farms.index', compact('farms'));
@@ -42,7 +44,10 @@ class FarmsController extends Controller {
      */
     public function create()
     {
-        $producers = DB::table('users')->select('id', 'identification', 'name')->where('role', 'p')->get();
+        $producers = DB::table('users')
+            ->select('id', 'identification', 'name')
+            ->where('role', 'p')
+            ->get();
         $regions = Region::all();
         return view('admin.farms.create', compact('producers', 'regions'));
     }
@@ -85,7 +90,7 @@ class FarmsController extends Controller {
                     'description' => 'Se creó la finca con ID: '.$request['asocebuID']
                 ]);
             }
-            catch(Exception $exception) {
+            catch(QueryException $exception) {
                 $state = 'Error';
                 $message = 'No se pudo crear la finca.';
                 $alert_class = 'alert-danger';
@@ -107,7 +112,10 @@ class FarmsController extends Controller {
     public function edit($id)
     {
         $farm = Farm::find($id);
-        $producers = DB::table('users')->select('id', 'identification')->where('role', 'p')->get();
+        $producers = DB::table('users')
+            ->select('id', 'identification')
+            ->where('role', 'p')
+            ->get();
         $region = Region::find($farm->regionID);
         return view('admin.farms.edit', compact('farm', 'producers', 'region'));
     }
@@ -147,7 +155,7 @@ class FarmsController extends Controller {
                     'description' => 'Se editó la finca con ID: '.$farm->asocebuID
                 ]);
             }
-            catch(Exception $exception) {
+            catch(QueryException $exception) {
                 $state = 'Error';
                 $message = 'No se pudo editar la finca.';
                 $alert_class = 'alert-danger';

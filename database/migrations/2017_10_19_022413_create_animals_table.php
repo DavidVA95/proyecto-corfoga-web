@@ -23,11 +23,11 @@ class CreateAnimalsTable extends Migration
             $table->date('birthdate');
             $table->string('fatherRegister', 15);
             $table->string('motherRegister', 15);
-            $table->timestamps();
 
             $table->foreign('asocebuFarmID')->references('asocebuID')->on('farms');
             $table->foreign('breedID')->references('id')->on('breeds');
             $table->index(['asocebuFarmID', 'breedID']);
+            $table->unique(['asocebuFarmID', 'register']);
         });
     }
 

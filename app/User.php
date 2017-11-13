@@ -7,7 +7,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable {
     use Notifiable;
-
     /**
      * Atributos que son asignables.
      *
@@ -24,7 +23,7 @@ class User extends Authenticatable {
     ];
 
     /**
-     * Atributos que no son asignables.
+     * Atributos que no pueden cambiar.
      *
      * @var array
      */

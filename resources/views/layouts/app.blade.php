@@ -22,8 +22,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand">{{config('app.name', 'CORGOGA Web Site')}}</a>
                 <img src="{{asset('img/logo.png')}}" alt="Logo" class="img-circle">
+                <a class="navbar-brand">{{config('app.name', 'CORGOGA Web Site')}}</a>
             </div>
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">

@@ -7,14 +7,7 @@
                 <div class="pull-left">
                     Filtro
                 </div>
-                {!!Form::open(['route' => 'admin.animales.store', 'method' => 'POST', 'class' => 'form-inline'])!!}
-                    <div class="form-group">
-                        {!!Form::file('excel', ['class' => 'form-control', 'accept' => '.xlsx', 'required' => 'required'])!!}
-                    </div>
-                    <button type="submit" class="btn btn-default" title="Cargar archivo">
-                        <i class="fa fa-upload"></i>
-                    </button>
-                {!!Form::close()!!}
+                <a class="btn btn-default" href="{{route('admin.animales.create')}}"><i class="fa fa-upload fa-fw"></i>Cargar animales</a>
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered text-center">
@@ -48,9 +41,11 @@
                         </tr>
                         @endforeach
                     </tbody>
-                    {{$animals->links()}}
                 </table>
             </div>
+        </div>
+        <div class="pull-right">
+            {{$animals->links()}}
         </div>
     </div>
 @endsection

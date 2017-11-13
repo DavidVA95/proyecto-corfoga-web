@@ -14,7 +14,6 @@ class Historical extends Model {
      * @var array
      */
     protected $fillable = [
-        'id',
         'userID',
         'typeID',
         'datetime',
@@ -22,7 +21,7 @@ class Historical extends Model {
     ];
 
     /**
-     * Atributos que no son asignables.
+     * Atributos que no pueden cambiar.
      *
      * @var array
      */

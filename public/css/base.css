@@ -53,9 +53,18 @@ body {
 }
 
 .panel .panel-heading {
-    color: #515962;;
+    color: #515962;
 }
 
 table.table-bordered{
-    margin-top:2px;
+    margin-top: 2px;
+}
+
+.pagination>li>a {
+    color: #23282D;
+}
+
+.pagination>.active>span {
+    background-color: #A1DB8A;
+    border-color: #A1DB8A;
 }

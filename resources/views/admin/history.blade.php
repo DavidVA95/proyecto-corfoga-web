@@ -2,8 +2,8 @@
 @section('page')
 <div class="container">
     <table class="table table-bordered shadow text-center">
-        <tr class="info">
-            <th>Tiempo transcurrido</th>
+        <tr class="success">
+            <th>Hora y fecha</th>
             <th>Responsable</th>
             <th>Tipo de acción</th>
             <th>Descripción</th>
@@ -18,7 +18,9 @@
             </tr>
             @endforeach
         </tbody>
-        {{$historicals->links()}}
     </table>
+    <div class="pull-right">
+        {{$historicals->links()}}
+    </div>
 </div>
 @endsection

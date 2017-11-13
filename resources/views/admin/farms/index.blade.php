@@ -22,7 +22,9 @@
                         @foreach($farms as $farm)
                         <tr>
                             <td>{{$farm->asocebuID}}</td>
-                            <td>{{$farm->identification}}<br>{{$farm->userName}}</td>
+                            <td>
+                                {!!link_to_route('admin.usuarios.edit', $title=$farm->identification, $parameters=$farm->userID)!!}
+                            </td>
                             <td>{{$farm->regionName}}</td>
                             <td>{{{$farm->farmName}}}</td>
                             <td>
@@ -31,9 +33,11 @@
                         </tr>
                         @endforeach
                     </tbody>
-                    {{$farms->links()}}
                 </table>
             </div>
+        </div>
+        <div class="pull-right">
+            {{$farms->links()}}
         </div>
     </div>
 @endsection

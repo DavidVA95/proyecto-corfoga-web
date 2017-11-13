@@ -16,7 +16,7 @@ class CreateBreedsTable extends Migration
     {
         Schema::create('breeds', function (Blueprint $table) {
             $table->tinyInteger('id')->primary()->unsigned();
-            $table->string('name', 45);
+            $table->string('name', 20);
         });
         // Se insertan los valores por defecto de la tabla.
         DB::table('breeds')->insert([

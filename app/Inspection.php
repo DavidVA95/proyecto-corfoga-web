@@ -6,7 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Inspection extends Model {
     /**
-     * Atributos que no son asignables.
+     * Atributos que son asignables.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'datetime',
+        'visitNumber'
+    ];
+
+    /**
+     * Atributos que no pueden cambiar.
      *
      * @var array
      */

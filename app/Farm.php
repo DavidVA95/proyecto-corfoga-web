@@ -21,7 +21,7 @@ class Farm extends Model {
     ];
 
     /**
-     * Atributos que no son asignables.
+     * Atributos que no pueden cambiar.
      *
      * @var array
      */

@@ -21,15 +21,21 @@ class HistoryController extends Controller {
             ->join('users', 'historicals.userID', '=', 'users.id')
             ->join('types', 'historicals.typeID', '=', 'types.id')
             ->select('users.name as userName', 'types.name as typeName', 'historicals.description', 'historicals.datetime')
+            ->orderBy('historicals.datetime', 'desc')
             ->paginate(10);
         // Obtiene la fecha actual.
         $actualDate = Carbon::now('America/Costa_Rica');
         // Recorre la tabla del historial.
         foreach($historicals as $historical) {
+            // Reemplaza la fecha almacenada de la acción por una con formato más amigable.
+            $historical->datetime = Carbon::createFromFormat('Y-m-d H:i:s', $historical->datetime)
+                ->format('h:i a ─ d/m/Y');
+            /*
             // Reemplaza la fecha almacenada de la acción por un cálculo de cuantos días, horas y minutos han pasado.
             $historical->datetime = $actualDate
                 ->diff(Carbon::createFromFormat('Y-m-d H:i:s', $historical->datetime))
                 ->format('Hace %d días %H horas y %I minutos.');
+            */
         }
         return view('admin.history', compact('historicals'));
     }

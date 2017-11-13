@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
 use Carbon\Carbon;
-use App\User;
-use App\Historical;
 use Validator;
 use Session;
 use Redirect;
+use App\User;
+use App\Historical;
 
 class UsersController extends Controller {
 
@@ -85,7 +86,7 @@ class UsersController extends Controller {
                     'description' => 'Se creó el usuario con cédula: '.$request['identification']
                 ]);
             }
-            catch(Exception $exception) {
+            catch(QueryException $exception) {
                 $state = 'Error';
                 $message = 'No se pudo crear el usuario.';
                 $alert_class = 'alert-danger';
@@ -157,7 +158,7 @@ class UsersController extends Controller {
                     'description' => 'Se editó el usuario con cédula: '.$user->identification
                 ]);
             }
-            catch(Exception $exception) {
+            catch(QueryException $exception) {
                 $state = 'Error';
                 $message = 'No se pudo editar el usuario.';
                 $alert_class = 'alert-danger';
