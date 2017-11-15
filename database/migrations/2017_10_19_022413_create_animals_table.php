@@ -17,17 +17,18 @@ class CreateAnimalsTable extends Migration
             $table->increments('id');
             $table->integer('asocebuFarmID')->unsigned();
             $table->tinyInteger('breedID')->unsigned();
-            $table->string('register', 15);
+            $table->string('register', 15)->unique();
             $table->string('code', 15);
             $table->enum('sex', ['m', 'h']);
             $table->date('birthdate');
             $table->string('fatherRegister', 15);
+            $table->string('fatherCode', 15);
             $table->string('motherRegister', 15);
+            $table->string('motherCode', 15);
 
-            $table->foreign('asocebuFarmID')->references('asocebuID')->on('farms');
+            $table->foreign('asocebuFarmID')->references('asocebuID')->on('farms')->onUpdate('cascade');
             $table->foreign('breedID')->references('id')->on('breeds');
-            $table->index(['asocebuFarmID', 'breedID']);
-            $table->unique(['asocebuFarmID', 'register']);
+            $table->index(['asocebuFarmID', 'breedID', 'sex']);
         });
     }
 

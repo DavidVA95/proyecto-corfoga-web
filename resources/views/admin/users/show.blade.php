@@ -83,7 +83,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
-                                    {!!Form::submit('Actualizar usuario', ['class' => 'btn button'])!!}
+                                    {!!Form::submit('Actualizar usuario', ['class' => 'btn btn-success'])!!}
                                 </div>
                             </div>
                         {!!Form::close()!!}

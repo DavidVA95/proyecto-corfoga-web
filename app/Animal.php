@@ -21,7 +21,9 @@ class Animal extends Model {
         'sex',
         'birthdate',
         'fatherRegister',
-        'motherRegister'
+        'fatherCode',
+        'motherRegister',
+        'motherCode'
     ];
 
     /**
@@ -38,7 +40,9 @@ class Animal extends Model {
          'sex',
          'birthdate',
          'fatherRegister',
-         'motherRegister'
+         'fatherCode',
+         'motherRegister',
+         'motherCode'
      ];
 
     /**

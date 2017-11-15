@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('phoneNumber', 9)->nullable();
             $table->enum('role', ['a', 'i', 'p']);
+            $table->enum('state', ['1', '0']);
             $table->rememberToken();
             $table->timestamps();
             $table->index('identification');

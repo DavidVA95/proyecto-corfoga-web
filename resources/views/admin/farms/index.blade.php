@@ -16,21 +16,37 @@
                         <th>Dueño</th>
                         <th>Región</th>
                         <th>Nombre</th>
+                        <th>Estado</th>
                         <th>Operaciones</th>
                     </tr>
                     <tbody>
                         @foreach($farms as $farm)
-                        <tr>
-                            <td>{{$farm->asocebuID}}</td>
-                            <td>
-                                {!!link_to_route('admin.usuarios.edit', $title=$farm->identification, $parameters=$farm->userID)!!}
-                            </td>
-                            <td>{{$farm->regionName}}</td>
-                            <td>{{{$farm->farmName}}}</td>
-                            <td>
-                                {!!link_to_route('admin.fincas.edit', $title='Ver / Editar', $parameters=$farm->asocebuID, $attributes=['class'=>'btn btn-primary button'])!!}
-                            </td>
-                        </tr>
+                            @if($farm->farmState == '1')
+                                @php
+                                    $class = '';
+                                    $state = 'Activa';
+                                    $action = 'Desactivar';
+                                @endphp
+                            @else
+                                @php
+                                    $class = 'danger';
+                                    $state = 'Inactiva';
+                                    $action = 'Activar';
+                                @endphp
+                            @endif
+                            <tr class="{{$class}}">
+                                <td>{{$farm->asocebuID}}</td>
+                                <td>
+                                    {!!link_to_route('admin.usuarios.show', $title=$farm->identification.' ─ '.$farm->userName, $parameters=$farm->userID)!!}
+                                </td>
+                                <td>{{$farm->regionName}}</td>
+                                <td>{{$farm->farmName}}</td>
+                                <td>{{$state}}</td>
+                                <td>
+                                    {!!link_to_route('admin.fincas.show', $title='Ver / Editar', $parameters=$farm->asocebuID, $attributes=['class'=>'btn btn-success'])!!}
+                                    {!!link_to_route('admin.fincas.edit', $title=$action, $parameters=$farm->asocebuID, $attributes=['class'=>'btn btn-danger'])!!}
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

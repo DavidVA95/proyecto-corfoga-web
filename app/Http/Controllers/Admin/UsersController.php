@@ -10,8 +10,8 @@ use Illuminate\Database\QueryException;
 use Carbon\Carbon;
 use Validator;
 use Session;
-use Redirect;
 use App\User;
+use App\Farm;
 use App\Historical;
 
 class UsersController extends Controller {
@@ -95,7 +95,7 @@ class UsersController extends Controller {
             Session::flash('state', $state);
             Session::flash('message', $message);
             Session::flash('alert_class', $alert_class);
-            return Redirect::to('admin/usuarios/create');
+            return redirect()->route('admin.usuarios.index');
         }
     }
 
@@ -105,9 +105,50 @@ class UsersController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function show($id) {
         $user = User::find($id);
-        return view('admin.users.edit', compact('user'));
+        return view('admin.users.show', compact('user'));
+    }
+
+    /**
+     * Permite activar o desactivar un usuario y sus fincas.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id) {
+        $state = 'Listo';
+        $alert_class = 'alert-success';
+        $user = User::find($id);
+        try{
+            if($user->state == '1'){
+                $user->state = '0';
+                $message = 'El usuario fue desactivado exitosamente.';
+            }
+            else{
+                $user->state = '1';
+                $message = 'El usuario fue activado exitosamente.';
+            }
+            // Si el usuario es un productor será necesario activar/desactivar sus fincas.
+            if($user->role == 'p'){
+                foreach (Farm::where('userID', $id)->cursor() as $farm) {
+                    if($farm->state != $user->state) {
+                        $farm->state = $user->state;
+                        $farm->save();
+                    }
+                }
+            }
+            $user->save();
+        }
+        catch(QueryException $exception){
+            $state = 'Error';
+            $message = 'El usuario no pudo ser editada.';
+            $alert_class = 'alert-warning';
+        }
+        Session::flash('state', $state);
+        Session::flash('message', $message);
+        Session::flash('alert_class', $alert_class);
+        return redirect()->route('admin.usuarios.index');
     }
 
     /**
@@ -167,7 +208,7 @@ class UsersController extends Controller {
             Session::flash('state', $state);
             Session::flash('message', $message);
             Session::flash('alert_class', $alert_class);
-            return Redirect::to('admin/usuarios');
+            return redirect()->route('admin.usuarios.index');
         }
     }
 }

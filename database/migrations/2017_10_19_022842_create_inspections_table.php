@@ -20,7 +20,7 @@ class CreateInspectionsTable extends Migration
             $table->tinyInteger('visitNumber')->unsigned();
             $table->timestamps();
 
-            $table->foreign('asocebuFarmID')->references('asocebuID')->on('farms');
+            $table->foreign('asocebuFarmID')->references('asocebuID')->on('farms')->onUpdate('cascade');
             $table->index('asocebuFarmID');
         });
     }

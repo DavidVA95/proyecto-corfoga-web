@@ -3,11 +3,28 @@
     <div class="container">
         <div class="panel panel-success shadow">
             <div class="panel-heading">Animales registrados</div>
-            <div class="panel-body text-right">
-                <div class="pull-left">
-                    Filtro
+            <div class="panel-body">
+                <div class="col-md-2">
+                    <a class="btn btn-default" href="{{route('admin.animales.create')}}">
+                        <i class="fa fa-upload fa-fw"></i>Cargar animales
+                    </a>
                 </div>
-                <a class="btn btn-default" href="{{route('admin.animales.create')}}"><i class="fa fa-upload fa-fw"></i>Cargar animales</a>
+                {!!Form::open(['route' => 'admin.animales.index', 'method' => 'GET', 'class' => 'form-inline'])!!}
+                    <div class="col-md-2 col-md-offset-4">
+                        {!!Form::checkbox('raza', 'si', ['class' => 'checkbox'])!!}Ordenar por raza
+                    </div>
+                    <div class="col-md-2">
+                        {!!Form::checkbox('sexo', 'si', ['class' => 'checkbox'])!!}Ordenar por sexo
+                    </div>
+                    <div class="col-md-2">
+                        <div class="input-group">
+                            {!!Form::text('finca', '', ['placeholder' => 'Finca', 'class' => 'form-control'])!!}
+                            <span class="input-group-btn">
+                                {!!Form::submit('Aplicar', ['class' => 'btn btn-default'])!!}
+                            </span>
+                        </div>
+                    </div>
+                {!!Form::close()!!}
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered text-center">
@@ -18,27 +35,33 @@
                         <th>Raza</th>
                         <th>Sexo</th>
                         <th>Nacimiento</th>
-                        <th>Padre</th>
-                        <th>Madre</th>
+                        <th>Cód. padre</th>
+                        <th>Reg. padre</th>
+                        <th>Cód. madre</th>
+                        <th>Reg. madre</th>
                     </tr>
                     <tbody>
                         @foreach($animals as $animal)
-                        <tr>
-                            <td>{!!link_to_route('admin.fincas.edit', $title=$animal->asocebuFarmID, $parameters=$animal->asocebuFarmID)!!}</td>
-                            <td>{{$animal->register}}</td>
-                            <td>{{$animal->code}}</td>
-                            <td>{{$animal->name}}</td>
-                            <td>
-                                @if($animal->sex == 'm')
-                                    Macho
-                                @else
-                                    Hembra
-                                @endif
-                            </td>
-                            <td>{{$animal->birthdate}}</td>
-                            <td>{{$animal->fatherRegister}}</td>
-                            <td>{{$animal->motherRegister}}</td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    {!!link_to_route('admin.fincas.show', $title=$animal->asocebuFarmID, $parameters=$animal->asocebuFarmID)!!}
+                                </td>
+                                <td>{{$animal->register}}</td>
+                                <td>{{$animal->code}}</td>
+                                <td>{{$animal->breedName}}</td>
+                                <td>
+                                    @if($animal->sex == 'm')
+                                        Macho
+                                    @else
+                                        Hembra
+                                    @endif
+                                </td>
+                                <td>{{$animal->birthdate}}</td>
+                                <td>{{$animal->fatherRegister}}</td>
+                                <td>{{$animal->fatherCode}}</td>
+                                <td>{{$animal->motherRegister}}</td>
+                                <td>{{$animal->motherCode}}</td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

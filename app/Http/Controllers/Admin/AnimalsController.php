@@ -7,9 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
+use Illuminate\Pagination\Paginator;
 use Carbon\Carbon;
 use Session;
-use Redirect;
 use Excel;
 use App\Animal;
 use App\Historical;
@@ -21,17 +21,45 @@ class AnimalsController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-        $animals = DB::table('animals')
+    public function index(Request $request) {
+        // Se toman todos los animales.
+        $animals = new Animal;
+        // Se relacionan los animales con las razas.
+        $animals = $animals
             ->join('breeds', 'animals.breedID', '=', 'breeds.id')
-            ->paginate(10);
+            ->select('animals.*', 'breeds.name as breedName');
+        // Lista de filtros a aplicar.
+        $queries = [];
+        if(request()->has('finca')){
+            $asocebuFarmID = request('finca');
+            $animals = $animals->where('asocebuFarmID', $asocebuFarmID);
+            $queries['finca'] = $asocebuFarmID;
+        }
+        if(request()->has('raza')){
+            $animals = $animals->orderBy('breedName', 'asc');
+            $queries['raza'] = 'si';
+        }
+        if(request()->has('sexo')){
+            $animals = $animals->orderBy('sex', 'asc');
+            $queries['sexo'] = 'si';
+        }
+        $animals = $animals->paginate(10)->appends($queries);
+        $this->convertDate($animals);
+        return view('admin.animals.index', compact('animals'));
+    }
+
+    /**
+     * Cambia el formato de las fechas de nacimiento de los animales.
+     *
+     * @return \App\Animal[] $animals
+     */
+    public function convertDate($animals) {
         // Recorre la tabla de animales.
         foreach($animals as $animal) {
             // Reemplaza el formato de la fecha almacenada.
             $animal->birthdate = Carbon::createFromFormat('Y-m-d', $animal->birthdate)
                 ->format('d/m/Y');
         }
-        return view('admin.animals.index', compact('animals'));
     }
 
     /**
@@ -42,7 +70,7 @@ class AnimalsController extends Controller {
      */
     public function create() {
         $farms = DB::table('farms')
-            ->select('asocebuID')
+            ->select('asocebuID', 'name')
             ->orderBy('asocebuID', 'desc')
             ->get();
         return view('admin.animals.create', compact('farms'));
@@ -79,7 +107,9 @@ class AnimalsController extends Controller {
                         'sex' => strtolower($row['sx']),
                         'birthdate' => $row['fec.nac.'],
                         'fatherRegister' => $row['reg.padre'],
-                        'motherRegister' => $row['reg.madre']
+                        'fatherCode' => $row['cod.padre'],
+                        'motherRegister' => $row['reg.madre'],
+                        'motherCode' => $row['cod.madre']
                     ]);
                     $saved++;
                 }
@@ -112,7 +142,7 @@ class AnimalsController extends Controller {
         Session::flash('state', $state);
         Session::flash('message', $message);
         Session::flash('alert_class', $alert_class);
-        return Redirect::to('admin/animales/create');
+        return redirect()->route('admin.animales.index');
     }
 
     /**

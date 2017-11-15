@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Carbon\Carbon;
 use Validator;
-use Session;
 use Redirect;
+use Session;
 use App\Farm;
 use App\User;
 use App\Region;
@@ -29,8 +29,8 @@ class FarmsController extends Controller {
         $farms = DB::table('farms')
             ->join('users', 'farms.userID', '=', 'users.id')
             ->join('regions', 'farms.regionID', '=', 'regions.id')
-            ->select('farms.asocebuID', 'users.identification', 'users.id as userID',
-                'users.name as userName', 'regions.name as regionName', 'farms.name as farmName')
+            ->select('farms.asocebuID', 'users.identification', 'users.id as userID', 'users.name as userName',
+                'regions.name as regionName', 'farms.name as farmName', 'farms.state as farmState')
             ->orderBy('farms.asocebuID', 'desc')
             ->paginate(10);
         return view('admin.farms.index', compact('farms'));
@@ -99,7 +99,7 @@ class FarmsController extends Controller {
             Session::flash('state', $state);
             Session::flash('message', $message);
             Session::flash('alert_class', $alert_class);
-            return Redirect::to('admin/fincas/create');
+            return redirect()->route('admin.fincas.index');
         }
     }
 
@@ -109,7 +109,7 @@ class FarmsController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function show($id)
     {
         $farm = Farm::find($id);
         $producers = DB::table('users')
@@ -117,7 +117,40 @@ class FarmsController extends Controller {
             ->where('role', 'p')
             ->get();
         $region = Region::find($farm->regionID);
-        return view('admin.farms.edit', compact('farm', 'producers', 'region'));
+        return view('admin.farms.show', compact('farm', 'producers', 'region'));
+    }
+
+    /**
+     * Permite activar o desactivar una finca.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $state = 'Listo';
+        $alert_class = 'alert-success';
+        $farm = Farm::find($id);
+        try{
+            if($farm->state == '1'){
+                $farm->state = '0';
+                $message = 'La finca fue desactivada exitosamente.';
+            }
+            else{
+                $farm->state = '1';
+                $message = 'La finca fue activada exitosamente.';
+            }
+            $farm->save();
+        }
+        catch(QueryException $exception){
+            $state = 'Error';
+            $message = 'La finca no pudo ser actualizada.';
+            $alert_class = 'alert-warning';
+        }
+        Session::flash('state', $state);
+        Session::flash('message', $message);
+        Session::flash('alert_class', $alert_class);
+        return redirect()->route('admin.fincas.index');
     }
 
     /**
@@ -164,7 +197,7 @@ class FarmsController extends Controller {
             Session::flash('state', $state);
             Session::flash('message', $message);
             Session::flash('alert_class', $alert_class);
-            return Redirect::to('admin/fincas');
+            return redirect()->route('admin.fincas.index');
         }
     }
 }

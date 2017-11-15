@@ -18,6 +18,7 @@ class CreateFarmsTable extends Migration
             $table->integer('userID')->unsigned();
             $table->tinyInteger('regionID')->unsigned();
             $table->string('name', 100);
+            $table->enum('state', ['1', '0']);
             $table->timestamps();
 
             $table->foreign('userID')->references('id')->on('users');

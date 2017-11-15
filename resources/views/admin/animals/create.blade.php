@@ -13,7 +13,7 @@
                                 <div class="col-md-6">
                                     <select class="form-control"  name="farm">
                                         @foreach($farms as $farm)
-                                            <option value="{{$farm->asocebuID}}">{{$farm->asocebuID}}</option>
+                                            <option value="{{$farm->asocebuID}}">{{$farm->asocebuID}} ─ {{$farm->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -26,7 +26,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
-                                    {!!Form::submit('Cargar archivo', ['class' => 'btn button'])!!}
+                                    {!!Form::submit('Cargar archivo', ['class' => 'btn btn-success'])!!}
                                 </div>
                             </div>
                         {!!Form::close()!!}

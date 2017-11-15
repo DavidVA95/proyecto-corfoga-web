@@ -47,7 +47,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
-                                    {!!Form::submit('Crear finca', ['class' => 'btn button'])!!}
+                                    {!!Form::submit('Crear finca', ['class' => 'btn btn-success'])!!}
                                 </div>
                             </div>
                         {!!Form::close()!!}

@@ -26,12 +26,7 @@ body {
     color: #FAFAFA;
 }
 
-.navbar .navbar-nav>li>a:hover {
-    background-color: #FAFAFA;
-    color: #23282D;
-}
-
-.navbar .navbar-nav>li>a:focus {
+.navbar .navbar-nav>li>a:hover, .navbar .navbar-nav>li>a:focus {
     background-color: #23282D;
     color: #FAFAFA;
 }
@@ -40,13 +35,25 @@ body {
     color: #D4D4D4;
 }
 
-.button {
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu>li>a {
+        color: #FAFAFA;
+    }
+}
+
+.btn-success {
     background-color: #A1DB8A;
     border-color: #A1DB8A;
     color: #FAFAFA;
 }
 
-.button:hover {
+.btn-danger {
+    background-color: #D96055;
+    border-color: #D96055;
+    color: #FAFAFA;
+}
+
+.btn-success:hover, .btn-danger:hover {
     background-color: #CCC;
     border-color: #CCC;
     color: #23282D;
@@ -56,7 +63,7 @@ body {
     color: #515962;
 }
 
-table.table-bordered{
+table.table-bordered {
     margin-top: 2px;
 }
 
@@ -64,7 +71,7 @@ table.table-bordered{
     color: #23282D;
 }
 
-.pagination>.active>span {
+.pagination>.active>span, .pagination>.active>span:hover {
     background-color: #A1DB8A;
     border-color: #A1DB8A;
 }
