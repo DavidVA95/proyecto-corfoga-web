@@ -1,8 +1,6 @@
 <?php
 
-Route::post('login', 'Auth\LoginController@remoteLogin');
-Route::group(['middleware' => 'jwt.auth'], function() {
-    Route::get('get/fincas/{region}', 'Api\FarmsController');
-    Route::get('get/animales/{farm}', 'Api\AnimalsController');
-    Route::post('create/inspecciones', 'Api\InspectionsController');
-});
+Route::get('login', 'Auth\LoginController@remoteLogin');
+Route::get('fincas/get/{region}', 'ApiController@getFarmsByRegion');
+Route::get('animales/get/{farm}', 'ApiController@getAnimalsByFarm');
+Route::post('inspecciones/create', 'ApiController@createInspection');
