@@ -17,12 +17,28 @@ class HistoryController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $historicals = DB::table('historicals')
+        // Se toma tod el historial.
+        $historicals = new Historical();
+        // Se relaciona con los usuarios y los tipos.
+        $historicals = $historicals
             ->join('users', 'historicals.userID', '=', 'users.id')
             ->join('types', 'historicals.typeID', '=', 'types.id')
-            ->select('users.name as userName', 'types.name as typeName', 'historicals.description', 'historicals.datetime')
-            ->orderBy('historicals.datetime', 'desc')
-            ->paginate(10);
+            ->orderBy('datetime', 'desc')
+            ->select('users.name as userName', 'types.id as typeID', 'types.name as typeName',
+                'historicals.description', 'historicals.datetime');
+        // Lista de filtros a aplicar.
+        $queries = [];
+        if(request()->has('responsable')){
+            $user = request('responsable');
+            $historicals = $historicals->where('users.name', 'like', '%'.$user.'%');
+            $queries['responsable'] = $user;
+        }
+        if(request()->has('accion') && request('accion') != 0){
+            $action = request('accion');
+            $historicals = $historicals->where('types.id', $action);
+            $queries['accion'] = $action;
+        }
+        $historicals = $historicals->paginate(10)->appends($queries);
         $this->convertDate($historicals);
         return view('admin.history', compact('historicals'));
     }
@@ -37,7 +53,7 @@ class HistoryController extends Controller {
         foreach($historicals as $historical) {
             // Reemplaza la fecha almacenada de la acción por una con formato más amigable.
             $historical->datetime = Carbon::createFromFormat('Y-m-d H:i:s', $historical->datetime)
-                ->format('h:i a ─ d/m/Y');
+                ->format('d/m/Y ─ h:i a');
             /*
             // Obtiene la fecha actual.
             $actualDate = Carbon::now('America/Costa_Rica');

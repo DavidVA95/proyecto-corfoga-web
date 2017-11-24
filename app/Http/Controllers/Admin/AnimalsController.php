@@ -23,27 +23,29 @@ class AnimalsController extends Controller {
      */
     public function index(Request $request) {
         // Se toman todos los animales.
-        $animals = new Animal;
+        $animals = new Animal();
         // Se relacionan los animales con las razas.
         $animals = $animals
             ->join('breeds', 'animals.breedID', '=', 'breeds.id')
-            ->select('animals.*', 'breeds.name as breedName');
+            ->join('farms', 'animals.asocebuFarmID', '=', 'farms.asocebuID')
+            ->select('animals.*', 'breeds.name as breedName', 'farms.state');
         // Lista de filtros a aplicar.
         $queries = [];
-        if(request()->has('finca')){
+        $orderBy = 'farms.state asc';
+        if(request()->has('finca')) {
             $asocebuFarmID = request('finca');
             $animals = $animals->where('asocebuFarmID', $asocebuFarmID);
             $queries['finca'] = $asocebuFarmID;
         }
-        if(request()->has('raza')){
-            $animals = $animals->orderBy('breedName', 'asc');
-            $queries['raza'] = 'si';
-        }
-        if(request()->has('sexo')){
-            $animals = $animals->orderBy('sex', 'asc');
+        if(request()->has('sexo')) {
+            $orderBy = $orderBy.', sex asc';
             $queries['sexo'] = 'si';
         }
-        $animals = $animals->paginate(10)->appends($queries);
+        if(request()->has('raza')) {
+            $orderBy = $orderBy.', breedName asc';
+            $queries['raza'] = 'si';
+        }
+        $animals = $animals->orderByRaw($orderBy)->paginate(10)->appends($queries);
         $this->convertDate($animals);
         return view('admin.animals.index', compact('animals'));
     }
@@ -97,6 +99,10 @@ class AnimalsController extends Controller {
                     ->whereRaw('LOWER(`name`) = ?', [strtolower($row['raza'])])
                     ->pluck('id')
                     ->first();
+                // Si no se encuentra la raza del animal se pondrá 'desconocida'.
+                if(!$breedID){
+                    $breedID = 0;
+                }
                 try {
                     // Se almacena el animal en la base de datos.
                     Animal::create([

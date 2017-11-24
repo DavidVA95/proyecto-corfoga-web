@@ -26,13 +26,34 @@ class FarmsController extends Controller {
      */
     public function index()
     {
-        $farms = DB::table('farms')
+        // Se toman todas las fincas.
+        $farms = new Farm();
+        // Se relacionan las fincas con los productores y las regiones.
+        $farms = $farms
             ->join('users', 'farms.userID', '=', 'users.id')
             ->join('regions', 'farms.regionID', '=', 'regions.id')
-            ->select('farms.asocebuID', 'users.identification', 'users.id as userID', 'users.name as userName',
-                'regions.name as regionName', 'farms.name as farmName', 'farms.state as farmState')
-            ->orderBy('farms.asocebuID', 'desc')
-            ->paginate(10);
+            ->select('farms.asocebuID', 'users.identification', 'users.id as userID',
+                'users.name as userName', 'users.state as userState', 'regions.name as regionName',
+                'farms.name as farmName', 'farms.state as farmState');
+        // Lista de filtros a aplicar.
+        $queries = [];
+        /* Las fincas siempre están ordenadas por el estado de la finca y el asocebuID,
+           pero podrían ordenarse con algunos argumentos extra. */
+        $orderBy = 'farms.state asc, asocebuID asc';
+        if(request()->has('nombre')) {
+            $name = request('nombre');
+            $farms = $farms->where('farms.name', 'like', '%'.$name.'%');
+            $queries['nombre'] = $name;
+        }
+        if(request()->has('region')) {
+            $orderBy = 'regionName asc,'.$orderBy;
+            $queries['region'] = 'si';
+        }
+        if(request()->has('dueno')) {
+            $orderBy = 'userName asc,'.$orderBy;
+            $queries['dueno'] = 'si';
+        }
+        $farms = $farms->orderByRaw($orderBy)->paginate(10)->appends($queries);
         return view('admin.farms.index', compact('farms'));
     }
 
@@ -135,12 +156,23 @@ class FarmsController extends Controller {
             if($farm->state == '1'){
                 $farm->state = '0';
                 $message = 'La finca fue desactivada exitosamente.';
+                $typeID = 10;
+                $description = 'Se desactivó la finca con ID: '.$id;
             }
             else{
                 $farm->state = '1';
                 $message = 'La finca fue activada exitosamente.';
+                $typeID = 9;
+                $description = 'Se activó la finca con ID: '.$id;
             }
             $farm->save();
+            // Se guarda un registro en el historial referente a la acción realizada.
+            Historical::create([
+                'userID' => Auth::id(),
+                'typeID' => $typeID,
+                'datetime' => Carbon::now('America/Costa_Rica'),
+                'description' => $description
+            ]);
         }
         catch(QueryException $exception){
             $state = 'Error';

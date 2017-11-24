@@ -25,7 +25,11 @@ class CreateTypesTable extends Migration
             ['id' => 3, 'name' => 'Crear finca'],
             ['id' => 4, 'name' => 'Editar finca'],
             ['id' => 5, 'name' => 'Registrar animales'],
-            ['id' => 6, 'name' => 'Terminar inspección']
+            ['id' => 6, 'name' => 'Terminar inspección'],
+            ['id' => 7, 'name' => 'Activar usuario'],
+            ['id' => 8, 'name' => 'Desactivar usuario'],
+            ['id' => 9, 'name' => 'Activar finca'],
+            ['id' => 10, 'name' => 'Desactivar finca']
         ]);
     }
 

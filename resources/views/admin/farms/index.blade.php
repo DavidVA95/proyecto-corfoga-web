@@ -3,11 +3,28 @@
     <div class="container">
         <div class="panel panel-success shadow">
             <div class="panel-heading">Fincas registradas</div>
-            <div class="panel-body text-right">
-                <div class="pull-left">
-                    Filtro
+            <div class="panel-body">
+                <div class="col-md-2">
+                    <a class="btn btn-default" href="{{route('admin.fincas.create')}}">
+                        <i class="fa fa-plus fa-fw"></i>Crear finca
+                    </a>
                 </div>
-                <a class="btn btn-default" href="{{route('admin.fincas.create')}}"><i class="fa fa-plus fa-fw"></i>Crear finca</a>
+                {!!Form::open(['route' => 'admin.fincas.index', 'method' => 'GET', 'class' => 'form-inline'])!!}
+                    <div class="col-md-2 col-md-offset-3">
+                        {!!Form::checkbox('dueno', 'si')!!}Según el dueño
+                    </div>
+                    <div class="col-md-2">
+                        {!!Form::checkbox('region', 'si')!!}Según la region
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            {!!Form::text('nombre', '', ['placeholder' => 'Nombre', 'class' => 'form-control'])!!}
+                            <span class="input-group-btn">
+                                {!!Form::submit('Aplicar', ['class' => 'btn btn-default'])!!}
+                            </span>
+                        </div>
+                    </div>
+                {!!Form::close()!!}
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered text-center">
@@ -16,35 +33,35 @@
                         <th>Dueño</th>
                         <th>Región</th>
                         <th>Nombre</th>
-                        <th>Estado</th>
                         <th>Operaciones</th>
                     </tr>
                     <tbody>
                         @foreach($farms as $farm)
                             @if($farm->farmState == '1')
                                 @php
-                                    $class = '';
-                                    $state = 'Activa';
+                                    $trClass = '';
+                                    $buttonClass = ' btn-danger';
                                     $action = 'Desactivar';
                                 @endphp
                             @else
                                 @php
-                                    $class = 'danger';
-                                    $state = 'Inactiva';
+                                    $trClass = 'danger';
+                                    $buttonClass = ' btn-default';
                                     $action = 'Activar';
                                 @endphp
                             @endif
-                            <tr class="{{$class}}">
+                            <tr class="{{$trClass}}">
                                 <td>{{$farm->asocebuID}}</td>
                                 <td>
                                     {!!link_to_route('admin.usuarios.show', $title=$farm->identification.' ─ '.$farm->userName, $parameters=$farm->userID)!!}
                                 </td>
                                 <td>{{$farm->regionName}}</td>
                                 <td>{{$farm->farmName}}</td>
-                                <td>{{$state}}</td>
                                 <td>
                                     {!!link_to_route('admin.fincas.show', $title='Ver / Editar', $parameters=$farm->asocebuID, $attributes=['class'=>'btn btn-success'])!!}
-                                    {!!link_to_route('admin.fincas.edit', $title=$action, $parameters=$farm->asocebuID, $attributes=['class'=>'btn btn-danger'])!!}
+                                    @if($farm->userState == '1')
+                                        {!!link_to_route('admin.fincas.edit', $title=$action, $parameters=$farm->asocebuID, $attributes=['class'=>'btn'.$buttonClass])!!}
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

@@ -22,8 +22,23 @@ class UsersController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $users = DB::table('users')
-            ->paginate(10);
+        // Se toman todos los usuarios.
+        $users = new User();
+        // Lista de filtros a aplicar.
+        $queries = [];
+        /* Los usuarios siempre están ordenados por el estado, pero podrían ordenarse
+           con algunos argumentos extra. */
+        $orderBy = 'state asc';
+        if(request()->has('nombre')) {
+            $name = request('nombre');
+            $users = $users->where('name', 'like', '%'.$name.'%');
+            $queries['nombre'] = $name;
+        }
+        if(request()->has('rol')) {
+            $orderBy = $orderBy.', role asc';
+            $queries['rol'] = 'si';
+        }
+        $users = $users->orderByRaw($orderBy)->paginate(10)->appends($queries);
         return view('admin.users.index', compact('users'));
     }
 
@@ -124,10 +139,14 @@ class UsersController extends Controller {
             if($user->state == '1'){
                 $user->state = '0';
                 $message = 'El usuario fue desactivado exitosamente.';
+                $typeID = 8;
+                $description = 'Se desactivó el usuario con cédula: '.$user->identification;
             }
             else{
                 $user->state = '1';
                 $message = 'El usuario fue activado exitosamente.';
+                $typeID = 7;
+                $description = 'Se activó el usuario con cédula: '.$user->identification;
             }
             // Si el usuario es un productor será necesario activar/desactivar sus fincas.
             if($user->role == 'p'){
@@ -139,10 +158,17 @@ class UsersController extends Controller {
                 }
             }
             $user->save();
+            // Se guarda un registro en el historial referente a la acción realizada.
+            Historical::create([
+                'userID' => Auth::id(),
+                'typeID' => $typeID,
+                'datetime' => Carbon::now('America/Costa_Rica'),
+                'description' => $description
+            ]);
         }
         catch(QueryException $exception){
             $state = 'Error';
-            $message = 'El usuario no pudo ser editada.';
+            $message = 'El usuario no pudo ser editado.';
             $alert_class = 'alert-warning';
         }
         Session::flash('state', $state);

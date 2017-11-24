@@ -6,15 +6,15 @@
             <div class="panel-body">
                 <div class="col-md-2">
                     <a class="btn btn-default" href="{{route('admin.animales.create')}}">
-                        <i class="fa fa-upload fa-fw"></i>Cargar animales
+                        <i class="fa fa-upload fa-fw"></i>Agregar animales
                     </a>
                 </div>
                 {!!Form::open(['route' => 'admin.animales.index', 'method' => 'GET', 'class' => 'form-inline'])!!}
                     <div class="col-md-2 col-md-offset-4">
-                        {!!Form::checkbox('raza', 'si', ['class' => 'checkbox'])!!}Ordenar por raza
+                        {!!Form::checkbox('raza', 'si')!!}Según la raza
                     </div>
                     <div class="col-md-2">
-                        {!!Form::checkbox('sexo', 'si', ['class' => 'checkbox'])!!}Ordenar por sexo
+                        {!!Form::checkbox('sexo', 'si')!!}Según el sexo
                     </div>
                     <div class="col-md-2">
                         <div class="input-group">
@@ -42,7 +42,16 @@
                     </tr>
                     <tbody>
                         @foreach($animals as $animal)
-                            <tr>
+                            @if($animal->state == '1')
+                                @php
+                                    $trClass = '';
+                                @endphp
+                            @else
+                                @php
+                                    $trClass = 'danger';
+                                @endphp
+                            @endif
+                            <tr class="{{$trClass}}">
                                 <td>
                                     {!!link_to_route('admin.fincas.show', $title=$animal->asocebuFarmID, $parameters=$animal->asocebuFarmID)!!}
                                 </td>

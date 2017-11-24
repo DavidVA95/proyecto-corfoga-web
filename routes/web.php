@@ -12,5 +12,5 @@ Route::group(['namespace'=>'Admin', 'prefix'=>'admin', 'as'=>'admin.'], function
     Route::resource('fincas', 'FarmsController', ['only' => ['index', 'create', 'store', 'show', 'edit', 'update']]);
     Route::resource('animales', 'AnimalsController');
     Route::resource('inspecciones', 'InspectionsController');
-    Route::get('historial', 'HistoryController@index');
+    Route::get('historial', ['as' => 'historial', 'uses' => 'HistoryController@index']);
 });
