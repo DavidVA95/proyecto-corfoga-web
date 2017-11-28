@@ -55,6 +55,7 @@
     </header>
     {!!Html::script('js/app.js')!!}
     {!!Html::script('js/plugins/jquery.maskedinput.js')!!}
+    {!!Html::script('js/general.js')!!}
     @yield('javascript')
 </body>
 </html>

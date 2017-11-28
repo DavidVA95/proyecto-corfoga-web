@@ -7,7 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 class Detail extends Model {
     // Para que Eloquent no asuma los atributos "created_at" y "updated_at".
     public $timestamps = false;
-    
+
+    /**
+     * Atributos que son asignables.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'inspectionID',
+        'animalID',
+        'feedingMethodID',
+        'weight',
+        'scrotalCircumference',
+        'observations'
+    ];
+
     /**
      * Atributos que no pueden cambiar.
      *

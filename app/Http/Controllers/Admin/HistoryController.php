@@ -24,13 +24,13 @@ class HistoryController extends Controller {
             ->join('users', 'historicals.userID', '=', 'users.id')
             ->join('types', 'historicals.typeID', '=', 'types.id')
             ->orderBy('datetime', 'desc')
-            ->select('users.name as userName', 'types.id as typeID', 'types.name as typeName',
-                'historicals.description', 'historicals.datetime');
+            ->select(DB::raw('CONCAT(users.name, " ", users.lastName) as fullName'),
+                'types.id as typeID', 'types.name as typeName', 'historicals.description', 'historicals.datetime');
         // Lista de filtros a aplicar.
         $queries = [];
         if(request()->has('responsable')){
             $user = request('responsable');
-            $historicals = $historicals->where('users.name', 'like', '%'.$user.'%');
+            $historicals = $historicals->where(DB::raw('CONCAT(users.name, " ", users.lastName)'), 'like', '%'.$user.'%');
             $queries['responsable'] = $user;
         }
         if(request()->has('accion') && request('accion') != 0){

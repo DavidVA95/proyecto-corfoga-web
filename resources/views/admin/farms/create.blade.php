@@ -6,7 +6,7 @@
                 <div class="panel panel-default shadow">
                     <div class="panel-heading">Crear una nueva finca</div>
                     <div class="panel-body">
-                        {!!Form::open(['route' => 'admin.fincas.store', 'method' => 'POST', 'class' => 'form-horizontal'])!!}
+                        {!!Form::open(['route' => 'admin.fincas.store', 'method' => 'POST', 'class' => 'form-horizontal', 'onsubmit' => 'return confirmAction("El ID ASOCEBU y la región no prodrán ser cambiados después.")'])!!}
                             {{ csrf_field() }}
                             <div class="form-group">
                                 {!!Form::label('asocebuID', 'ID ASOCEBU:', ['class' => 'col-md-4 control-label'])!!}
@@ -19,7 +19,7 @@
                                 <div class="col-md-6">
                                     <select class="form-control"  name="owner">
                                         @foreach($producers as $producer)
-                                            <option value="{{$producer->id}}">{{$producer->identification." ── ".$producer->name}}</option>
+                                            <option value="{{$producer->id}}">{{$producer->identification." / ".$producer->fullName}}</option>
                                         @endforeach
                                     </select>
                                 </div>

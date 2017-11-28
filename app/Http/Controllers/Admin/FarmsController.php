@@ -33,7 +33,8 @@ class FarmsController extends Controller {
             ->join('users', 'farms.userID', '=', 'users.id')
             ->join('regions', 'farms.regionID', '=', 'regions.id')
             ->select('farms.asocebuID', 'users.identification', 'users.id as userID',
-                'users.name as userName', 'users.state as userState', 'regions.name as regionName',
+                DB::raw('CONCAT(users.name, " ", users.lastName) as userFullName'),
+                'users.state as userState', 'regions.name as regionName',
                 'farms.name as farmName', 'farms.state as farmState');
         // Lista de filtros a aplicar.
         $queries = [];
@@ -41,17 +42,17 @@ class FarmsController extends Controller {
            pero podrían ordenarse con algunos argumentos extra. */
         $orderBy = 'farms.state asc, asocebuID asc';
         if(request()->has('nombre')) {
-            $name = request('nombre');
-            $farms = $farms->where('farms.name', 'like', '%'.$name.'%');
-            $queries['nombre'] = $name;
+            $orderBy = 'farmName asc,'.$orderBy;
+            $queries['nombre'] = 'si';
         }
         if(request()->has('region')) {
             $orderBy = 'regionName asc,'.$orderBy;
             $queries['region'] = 'si';
         }
         if(request()->has('dueno')) {
-            $orderBy = 'userName asc,'.$orderBy;
-            $queries['dueno'] = 'si';
+            $owner = request('dueno');
+            $farms = $farms->where(DB::raw('CONCAT(users.name, " ", users.lastName)'), 'like', '%'.$owner.'%');
+            $queries['dueno'] = $owner;
         }
         $farms = $farms->orderByRaw($orderBy)->paginate(10)->appends($queries);
         return view('admin.farms.index', compact('farms'));
@@ -66,7 +67,7 @@ class FarmsController extends Controller {
     public function create()
     {
         $producers = DB::table('users')
-            ->select('id', 'identification', 'name')
+            ->select('id', 'identification', DB::raw('CONCAT(name, " ", lastName) as fullName'))
             ->where('role', 'p')
             ->get();
         $regions = Region::all();
@@ -134,7 +135,7 @@ class FarmsController extends Controller {
     {
         $farm = Farm::find($id);
         $producers = DB::table('users')
-            ->select('id', 'identification')
+            ->select('id', 'identification', DB::raw('CONCAT(name, " ", lastName) as fullName'))
             ->where('role', 'p')
             ->get();
         $region = Region::find($farm->regionID);

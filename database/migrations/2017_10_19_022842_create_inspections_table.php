@@ -18,7 +18,6 @@ class CreateInspectionsTable extends Migration
             $table->integer('asocebuFarmID')->unsigned();
             $table->dateTime('datetime');
             $table->tinyInteger('visitNumber')->unsigned();
-            $table->timestamps();
 
             $table->foreign('asocebuFarmID')->references('asocebuID')->on('farms')->onUpdate('cascade');
             $table->index('asocebuFarmID');

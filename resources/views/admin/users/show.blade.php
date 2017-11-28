@@ -82,6 +82,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                @if($anyFarm)
+                                    <div class="col-md-6 col-md-offset-4">
+                                        {!!link_to_route('admin.fincas.index', $title='Ver fincas', $parameters=['dueno' => $user->name.' '.$user->lastName], $attributes=['class' => 'btn btn-default'])!!}
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
                                     {!!Form::submit('Actualizar usuario', ['class' => 'btn btn-success'])!!}
                                 </div>

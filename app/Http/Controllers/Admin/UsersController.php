@@ -116,13 +116,22 @@ class UsersController extends Controller {
 
     /**
      * Busca un usuario por el "id" y luego lo retorna en una vista para su edición.
+     * Si el usuario es un productor, se buscan sus fincas, si tiene alguna entonces
+     * se notifica a través de la variable "anyFarm".
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
         $user = User::find($id);
-        return view('admin.users.show', compact('user'));
+        $anyFarm = false;
+        if($user->role == 'p') {
+            $farmsCount = Farm::where('userID', $user->id)->count();
+            if($farmsCount > 0){
+                $anyFarm = true;
+            }
+        }
+        return view('admin.users.show', compact('user', 'anyFarm'));
     }
 
     /**

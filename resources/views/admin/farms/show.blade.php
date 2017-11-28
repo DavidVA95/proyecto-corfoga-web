@@ -19,8 +19,7 @@
                                 <div class="col-md-6">
                                     <select class="form-control"  name="owner">
                                         @foreach($producers as $producer)
-                                            $selected = '';
-                                            <option value="{{$producer->id}}">{{$producer->identification}}</option>
+                                            <option value="{{$producer->id}}" <?php if($producer->id == $farm->userID) echo 'selected'?>>{{$producer->identification.' / '.$producer->fullName}}</option>
                                         @endforeach
                                     </select>
                                 </div>

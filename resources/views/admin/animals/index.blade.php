@@ -18,7 +18,7 @@
                     </div>
                     <div class="col-md-2">
                         <div class="input-group">
-                            {!!Form::text('finca', '', ['placeholder' => 'Finca', 'class' => 'form-control'])!!}
+                            {!!Form::text('finca', '', ['placeholder' => 'Finca', 'class' => 'form-control', 'id' => 'farm'])!!}
                             <span class="input-group-btn">
                                 {!!Form::submit('Aplicar', ['class' => 'btn btn-default'])!!}
                             </span>
@@ -80,4 +80,7 @@
             {{$animals->links()}}
         </div>
     </div>
+@endsection
+@section('javascript')
+    {!!Html::script('js/admin/animals/view.js')!!}
 @endsection

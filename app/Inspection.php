@@ -5,12 +5,16 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Inspection extends Model {
+    // Para que Eloquent no asuma los atributos "created_at" y "updated_at".
+    public $timestamps = false;
+
     /**
      * Atributos que son asignables.
      *
      * @var array
      */
     protected $fillable = [
+        'asocebuFarmID',
         'datetime',
         'visitNumber'
     ];

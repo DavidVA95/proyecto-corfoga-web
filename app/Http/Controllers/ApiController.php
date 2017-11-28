@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Carbon\Carbon;
 use App\Farm;
 use App\Animal;
+use App\FeedingMethod;
+use App\Inspection;
+use App\Detail;
+use App\Historical;
 
 class ApiController extends Controller {
 
@@ -30,8 +36,40 @@ class ApiController extends Controller {
         return response()->json(Animal::where('asocebuFarmID', $asocebuFarmID)->get(), 200, [], JSON_UNESCAPED_UNICODE);
     }
 
-    // Recibe el request para la creación de una nueva inspección.
-    public function createInspection() {
+    // Retorna los métodos de alimentación en un JSON para la aplicación móvil.
+    public function getFeedingMethods() {
+        return response()->json(FeedingMethod::all(), 200, [], JSON_UNESCAPED_UNICODE);
+    }
 
+    // Recibe el request para la creación de una nueva inspección.
+    public function createInspection(Request $request) {
+        $jsonInspection = json_decode($request->getContent(), true);
+        $asocebuFarmID = $jsonInspection['asocebuFarmID'];
+        $inspection = Inspection::create([
+            'asocebuFarmID' => $asocebuFarmID,
+            'datetime' => $jsonInspection['datetime'],
+            'visitNumber' => $jsonInspection['visitNumber']
+        ]);
+        $inspectionID = $inspection->id;
+        $animalCount = 0;
+        foreach($jsonInspection['details'] as $jsonDetail) {
+            Detail::create([
+                'inspectionID' => $inspectionID,
+                'animalID' => $jsonDetail['animalID'],
+                'feedingMethodID' => $jsonDetail['feedingMethodID'],
+                'weight' => $jsonDetail['weight'],
+                'scrotalCircumference' => $jsonDetail['scrotalCircumference'],
+                'observations' => $jsonDetail['observations']
+            ]);
+            $animalCount++;
+        }
+        // Se guarda un registro en el historial referente a la acción realizada.
+        Historical::create([
+            'userID' => $jsonInspection['inspector'],
+            'typeID' => 6,
+            'datetime' => Carbon::now('America/Costa_Rica'),
+            'description' => 'Inspección terminada en la finca: '.$asocebuFarmID.' con un total de '.$animalCount.' animales examinados'
+        ]);
+        return response()->json(['message' => 'Se ha insertado el reporte y sus detalles correspondientes'], 200);
     }
 }

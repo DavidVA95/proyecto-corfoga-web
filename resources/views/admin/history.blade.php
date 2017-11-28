@@ -10,14 +10,14 @@
                         '0' => ' ',
                         '1' => 'Crear usuario',
                         '2' => 'Editar usuario',
-                        '3' => 'Crear finca',
-                        '4' => 'Editar finca',
-                        '5' => 'Registrar animales',
-                        '6' => 'Terminar inspección',
                         '7' => 'Activar usuario',
                         '8' => 'Desactivar usuario',
+                        '3' => 'Crear finca',
+                        '4' => 'Editar finca',
                         '9' => 'Activar finca',
-                        '10' => 'Desactivar finca'
+                        '10' => 'Desactivar finca',
+                        '5' => 'Registrar animales',
+                        '6' => 'Terminar inspección'
                     ], '0', ['class' => 'form-control'])!!}
                 </div>
                 <div class="col-md-3">
@@ -41,9 +41,9 @@
                 @foreach($historicals as $historical)
                 <tr>
                     <td>{{$historical->datetime}}</td>
-                    <td>{{$historical->userName}}</td>
+                    <td>{{$historical->fullName}}</td>
                     <td>{{$historical->typeName}}</td>
-                    <td>{{$historical->description}}</td>
+                    <td class="col-md-5">{{$historical->description}}</td>
                 </tr>
                 @endforeach
             </tbody>

@@ -11,14 +11,14 @@
                 </div>
                 {!!Form::open(['route' => 'admin.fincas.index', 'method' => 'GET', 'class' => 'form-inline'])!!}
                     <div class="col-md-2 col-md-offset-3">
-                        {!!Form::checkbox('dueno', 'si')!!}Según el dueño
+                        {!!Form::checkbox('nombre', 'si')!!}Según el nombre
                     </div>
                     <div class="col-md-2">
                         {!!Form::checkbox('region', 'si')!!}Según la region
                     </div>
                     <div class="col-md-3">
                         <div class="input-group">
-                            {!!Form::text('nombre', '', ['placeholder' => 'Nombre', 'class' => 'form-control'])!!}
+                            {!!Form::text('dueno', '', ['placeholder' => 'Dueño', 'class' => 'form-control'])!!}
                             <span class="input-group-btn">
                                 {!!Form::submit('Aplicar', ['class' => 'btn btn-default'])!!}
                             </span>
@@ -29,8 +29,8 @@
             <div class="table-responsive">
                 <table class="table table-bordered text-center">
                     <tr class="success">
-                        <th>ID ASOCEBU</th>
                         <th>Dueño</th>
+                        <th>ID ASOCEBU</th>
                         <th>Región</th>
                         <th>Nombre</th>
                         <th>Operaciones</th>
@@ -51,10 +51,10 @@
                                 @endphp
                             @endif
                             <tr class="{{$trClass}}">
-                                <td>{{$farm->asocebuID}}</td>
                                 <td>
-                                    {!!link_to_route('admin.usuarios.show', $title=$farm->identification.' ─ '.$farm->userName, $parameters=$farm->userID)!!}
+                                    {!!link_to_route('admin.usuarios.show', $title=$farm->identification.' / '.$farm->userFullName, $parameters=$farm->userID)!!}
                                 </td>
+                                <td>{{$farm->asocebuID}}</td>
                                 <td>{{$farm->regionName}}</td>
                                 <td>{{$farm->farmName}}</td>
                                 <td>

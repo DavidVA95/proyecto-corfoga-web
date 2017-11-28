@@ -6,7 +6,7 @@
                 <div class="panel panel-default shadow">
                     <div class="panel-heading">Crear un nuevo usuario</div>
                     <div class="panel-body">
-                        {!!Form::open(['route' => 'admin.usuarios.store', 'method' => 'POST', 'class' => 'form-horizontal'])!!}
+                        {!!Form::open(['route' => 'admin.usuarios.store', 'method' => 'POST', 'class' => 'form-horizontal', 'onsubmit' => 'return confirmAction("La cédula y el rol no prodrán ser cambiados después.")'])!!}
                             {{ csrf_field() }}
                             <div class="form-group">
                                 {!!Form::label('role', 'Rol:', ['class' => 'col-md-4 control-label'])!!}
