@@ -20,6 +20,12 @@
                                     {!!Form::text('identification', $user->identification, ['class' => 'form-control', 'required' => 'required', 'readonly' => 'readonly', 'id' => 'identification'])!!}
                                 </div>
                             </div>
+                            <div class="form-group">
+                                {!!Form::label('state', 'Estado:', ['class' => 'col-md-4 control-label'])!!}
+                                <div class="col-md-6">
+                                    {!!Form::text('state', ($user->state == '1') ? 'Activo' : 'Inactivo', ['class' => 'form-control', 'readonly' => 'readonly'])!!}
+                                </div>
+                            </div>
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                 {!!Form::label('name', 'Nombre:', ['class' => 'col-md-4 control-label'])!!}
                                 <div class="col-md-6">

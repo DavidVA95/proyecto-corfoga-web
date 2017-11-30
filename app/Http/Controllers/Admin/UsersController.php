@@ -31,7 +31,7 @@ class UsersController extends Controller {
         $orderBy = 'state asc';
         if(request()->has('nombre')) {
             $name = request('nombre');
-            $users = $users->where('name', 'like', '%'.$name.'%');
+            $users = $users->where(DB::raw('CONCAT(name, " ", lastName)'), 'like', '%'.$name.'%');
             $queries['nombre'] = $name;
         }
         if(request()->has('rol')) {

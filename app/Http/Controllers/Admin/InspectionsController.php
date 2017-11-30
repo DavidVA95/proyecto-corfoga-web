@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Pagination\Paginator;
+use App\Inspection;
 
 class InspectionsController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +16,8 @@ class InspectionsController extends Controller {
      */
     public function index()
     {
-        //
+        $inspections = Inspection::all();
+        return view('admin.inspections.index', compact('inspections'));
     }
 
     /**

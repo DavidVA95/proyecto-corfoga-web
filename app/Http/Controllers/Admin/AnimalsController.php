@@ -31,7 +31,7 @@ class AnimalsController extends Controller {
             ->select('animals.*', 'breeds.name as breedName', 'farms.state');
         // Lista de filtros a aplicar.
         $queries = [];
-        $orderBy = 'farms.state asc';
+        $orderBy = 'farms.state asc, farms.asocebuID asc';
         if(request()->has('finca')) {
             $asocebuFarmID = request('finca');
             $animals = $animals->where('asocebuFarmID', $asocebuFarmID);
@@ -149,50 +149,5 @@ class AnimalsController extends Controller {
         Session::flash('message', $message);
         Session::flash('alert_class', $alert_class);
         return redirect()->route('admin.animales.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

@@ -40,14 +40,14 @@ class FarmsController extends Controller {
         $queries = [];
         /* Las fincas siempre están ordenadas por el estado de la finca y el asocebuID,
            pero podrían ordenarse con algunos argumentos extra. */
-        $orderBy = 'farms.state asc, asocebuID asc';
-        if(request()->has('nombre')) {
-            $orderBy = 'farmName asc,'.$orderBy;
-            $queries['nombre'] = 'si';
-        }
+        $orderBy = 'farms.state asc';
         if(request()->has('region')) {
-            $orderBy = 'regionName asc,'.$orderBy;
+            $orderBy = $orderBy.',regionName asc';
             $queries['region'] = 'si';
+        }
+        if(request()->has('nombre')) {
+            $orderBy = $orderBy.',farmName asc';
+            $queries['nombre'] = 'si';
         }
         if(request()->has('dueno')) {
             $owner = request('dueno');
