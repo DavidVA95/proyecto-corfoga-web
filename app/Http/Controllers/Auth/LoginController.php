@@ -8,17 +8,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use Redirect;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 
 class LoginController extends Controller {
-
     use AuthenticatesUsers;
 
     protected function authenticated(Request $request, $user) {
-        if ($user->role == 'a') {
-            return Redirect::to('admin/inicio');
-        }
+        return redirect()->route('inicio');
     }
 
     public function __construct() {

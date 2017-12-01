@@ -31,6 +31,8 @@ class AnimalsController extends Controller {
             ->select('animals.*', 'breeds.name as breedName', 'farms.state');
         // Lista de filtros a aplicar.
         $queries = [];
+        /* Los animales siempre están ordenados por el estado de la finca y el asocebuID,
+           pero podrían ordenarse con algunos argumentos extra. */
         $orderBy = 'farms.state asc, farms.asocebuID asc';
         if(request()->has('finca')) {
             $asocebuFarmID = request('finca');

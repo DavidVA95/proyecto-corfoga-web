@@ -27,7 +27,7 @@
             </div>
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><i class="fa fa-home fa-fw"></i>Inicio</a></li>
+                    <li><a href="{{route('inicio')}}"><i class="fa fa-home fa-fw"></i>Inicio</a></li>
                     @if (Auth::guest())
                         <li><a href="{{route('login')}}"><i class="fa sign-in fa-fw"></i>Acceder</a></li>
                     @else
@@ -51,6 +51,14 @@
                 </ul>
             </div>
         </nav>
+        @if(Session::has('state'))
+            <div class="container alert {{Session::get('alert_class')}} alert-dismissible show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>¡{{Session::get('state')}}!</strong> {{Session::get('message')}}
+            </div>
+        @endif
         @yield('content')
     </header>
     {!!Html::script('js/app.js')!!}
