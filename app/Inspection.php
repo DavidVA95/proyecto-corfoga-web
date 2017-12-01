@@ -15,6 +15,7 @@ class Inspection extends Model {
      */
     protected $fillable = [
         'asocebuFarmID',
+        'userID',
         'datetime',
         'visitNumber'
     ];
@@ -27,6 +28,7 @@ class Inspection extends Model {
      protected $guarded = [
         'id',
         'asocebuFarmID',
+        'userID',
         'datetime',
         'visitNumber'
      ];
@@ -39,5 +41,10 @@ class Inspection extends Model {
      // Se asocia la inspección con su respectiva finca.
      public function farm() {
          $this->hasOne('App\Farm', 'asocebuID', 'asocebuFarmID');
+     }
+
+     // Se asocia la inspección con su respectivo inspector.
+     public function user() {
+         $this->hasOne('App\User', 'id', 'userID');
      }
 }

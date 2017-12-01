@@ -16,10 +16,12 @@ class CreateInspectionsTable extends Migration
         Schema::create('inspections', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('asocebuFarmID')->unsigned();
+            $table->integer('userID')->unsigned();
             $table->dateTime('datetime');
             $table->tinyInteger('visitNumber')->unsigned();
 
-            $table->foreign('asocebuFarmID')->references('asocebuID')->on('farms')->onUpdate('cascade');
+            $table->foreign('asocebuFarmID')->references('asocebuID')->on('farms');
+            $table->foreign('userID')->references('id')->on('users');
             $table->index('asocebuFarmID');
         });
     }

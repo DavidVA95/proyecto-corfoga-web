@@ -26,7 +26,7 @@ class CreateAnimalsTable extends Migration
             $table->string('motherRegister', 15);
             $table->string('motherCode', 15);
 
-            $table->foreign('asocebuFarmID')->references('asocebuID')->on('farms')->onUpdate('cascade');
+            $table->foreign('asocebuFarmID')->references('asocebuID')->on('farms');
             $table->foreign('breedID')->references('id')->on('breeds');
             $table->index(['asocebuFarmID', 'breedID', 'sex']);
         });

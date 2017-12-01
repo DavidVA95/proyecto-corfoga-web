@@ -82,5 +82,5 @@
     </div>
 @endsection
 @section('javascript')
-    {!!Html::script('js/admin/animals/view.js')!!}
+    {!!Html::script('js/admin/animals/index.js')!!}
 @endsection

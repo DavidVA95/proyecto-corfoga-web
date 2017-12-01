@@ -30,24 +30,26 @@
                 </div>
             {!!Form::close()!!}
         </div>
-        <table class="table table-bordered shadow text-center">
-            <tr class="success">
-                <th>Hora y fecha</th>
-                <th>Responsable</th>
-                <th>Tipo de acción</th>
-                <th>Descripción</th>
-            </tr>
-            <tbody>
-                @foreach($historicals as $historical)
-                <tr>
-                    <td>{{$historical->datetime}}</td>
-                    <td>{{$historical->fullName}}</td>
-                    <td>{{$historical->typeName}}</td>
-                    <td class="col-md-5">{{$historical->description}}</td>
+        <div class="table-responsive">
+            <table class="table table-bordered shadow text-center">
+                <tr class="success">
+                    <th>Hora y fecha</th>
+                    <th>Responsable</th>
+                    <th>Tipo de acción</th>
+                    <th>Descripción</th>
                 </tr>
-                @endforeach
-            </tbody>
-        </table>
+                <tbody>
+                    @foreach($historicals as $historical)
+                    <tr>
+                        <td>{{$historical->datetime}}</td>
+                        <td>{{$historical->fullName}}</td>
+                        <td>{{$historical->typeName}}</td>
+                        <td class="col-md-5">{{$historical->description}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
         <div class="pull-right">
             {{$historicals->links()}}
         </div>

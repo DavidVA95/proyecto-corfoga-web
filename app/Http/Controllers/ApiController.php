@@ -45,10 +45,13 @@ class ApiController extends Controller {
     public function createInspection(Request $request) {
         $jsonInspection = json_decode($request->getContent(), true);
         $asocebuFarmID = $jsonInspection['asocebuFarmID'];
+        $userID = $jsonInspection['inspector'];
+        $visitNumber = $jsonInspection['visitNumber'];
         $inspection = Inspection::create([
             'asocebuFarmID' => $asocebuFarmID,
+            'userID' => $userID,
             'datetime' => $jsonInspection['datetime'],
-            'visitNumber' => $jsonInspection['visitNumber']
+            'visitNumber' => $visitNumber
         ]);
         $inspectionID = $inspection->id;
         $animalCount = 0;
@@ -65,10 +68,10 @@ class ApiController extends Controller {
         }
         // Se guarda un registro en el historial referente a la acción realizada.
         Historical::create([
-            'userID' => $jsonInspection['inspector'],
+            'userID' => $userID,
             'typeID' => 6,
             'datetime' => Carbon::now('America/Costa_Rica'),
-            'description' => 'Inspección terminada en la finca: '.$asocebuFarmID.' con un total de '.$animalCount.' animales examinados'
+            'description' => 'Inspección número '.$visitNumber.' terminada en la finca: '.$asocebuFarmID.' con un total de '.$animalCount.' animales examinados'
         ]);
         return response()->json(['message' => 'Se ha insertado el reporte y sus detalles correspondientes'], 200);
     }
