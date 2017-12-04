@@ -33,7 +33,7 @@ class CreateUsersTable extends Migration
             'name' => 'Admin',
             'lastName' => 'Corfoga',
             'password' => '$2b$10$YLI6p8Ntje.muyfpdjepN.myjythc8CZTlUmvyI8ybPDGNvHEARJu',
-            'email' => 'admin@corfoga.com'
+            'email' => 'admin@corfoga.com',
             'phoneNumber' => '0000-0000',
             'role' => 'a',
             'state' => '1'
