@@ -27,6 +27,17 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->index('identification');
         });
+        // Se insertan los valores por defecto de la tabla.
+        DB::table('users')->insert([
+            'identification' => '0-0000-0000',
+            'name' => 'Admin',
+            'lastName' => 'Corfoga',
+            'password' => '$2b$10$YLI6p8Ntje.muyfpdjepN.myjythc8CZTlUmvyI8ybPDGNvHEARJu',
+            'email' => 'admin@corfoga.com'
+            'phoneNumber' => '0000-0000',
+            'role' => 'a',
+            'state' => '1'
+        ]);
     }
 
     /**
