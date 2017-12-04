@@ -10,6 +10,7 @@ use Illuminate\Database\QueryException;
 use Carbon\Carbon;
 use Validator;
 use Session;
+use Redirect;
 use App\User;
 use App\Farm;
 use App\Historical;

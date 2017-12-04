@@ -13,7 +13,7 @@
                                 <div class="col-md-6">
                                     <select class="form-control"  name="farm">
                                         @foreach($farms as $farm)
-                                            <option value="{{$farm->asocebuID}}">{{$farm->asocebuID}} ─ {{$farm->name}}</option>
+                                            <option value="{{$farm->asocebuID}}">{{$farm->asocebuID}} / {{$farm->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>

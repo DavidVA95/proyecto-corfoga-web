@@ -20,6 +20,7 @@ class CreateFeedingMethodsTable extends Migration
         });
         // Se insertan los valores por defecto de la tabla.
         DB::table('feeding_methods')->insert([
+            ['id' => 0, 'name' => 'Desconocido'],
             ['id' => 1, 'name' => 'Pastoreo'],
             ['id' => 2, 'name' => 'Estabulación'],
             ['id' => 3, 'name' => 'Semi estabulación'],

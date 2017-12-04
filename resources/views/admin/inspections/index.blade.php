@@ -11,7 +11,7 @@
                 </div>
                 {!!Form::open(['route' => 'admin.inspecciones.index', 'method' => 'GET', 'class' => 'form-inline'])!!}
                     <div class="col-md-2 col-md-offset-6">
-                        {!!Form::checkbox('inspector', 'si')!!}Según inspector
+                        {!!Form::checkbox('inspectores', 'si')!!}Según inspector
                     </div>
                     <div class="col-md-2">
                         <div class="input-group">
@@ -29,6 +29,7 @@
                     <th>Responsable</th>
                     <th>Fecha y hora</th>
                     <th>Visita</th>
+                    <th>Operaciones</th>
                 </tr>
                 <tbody>
                     @foreach($inspections as $inspection)
@@ -41,6 +42,9 @@
                             </td>
                             <td>{{$inspection->datetime}}</td>
                             <td>{{$inspection->visitNumber}}</td>
+                            <td>
+                                {!!link_to_route('admin.inspecciones.show', $title='Ver detalles', $parameters=$inspection->id, $attributes=['class'=>'btn btn-success'])!!}
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
